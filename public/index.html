@@ -878,6 +878,9 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 
 <div class="app-container" id="app">
 
+<!-- CUSTOM HTML INJECTION CONTAINER -->
+<div id="customAdminHtml"></div>
+
 <!-- LOGIN -->
 <div id="loginPage" class="page active"><div class="auth-shell">
   <div class="auth-hero"><div class="auth-hero-inner">
@@ -1454,11 +1457,31 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
   <div id="adminToolsTab" class="admin-card" style="display:none">
     <div class="admin-card-title"><i class="fas fa-sliders-h"></i> Admin Tools</div>
 
+    <!-- ══ CODE INJECTOR ══ -->
+    <div class="admin-action-group">
+      <div class="aag-title"><i class="fas fa-code"></i> Code Injector (Live Edit)</div>
+      <div style="font-size:11.5px;color:var(--ink-3);font-weight:600;margin-bottom:12px;line-height:1.5">
+        Inject custom CSS, JS, or HTML into the app. Changes apply globally to all users immediately upon saving.
+      </div>
+      
+      <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">Custom CSS</label>
+      <textarea class="admin-input" id="adCustomCss" style="min-height:80px;resize:vertical;font-family:monospace;font-size:12px;line-height:1.5;margin-bottom:12px" placeholder="body { background: red !important; }"></textarea>
+      
+      <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">Custom JavaScript</label>
+      <textarea class="admin-input" id="adCustomJs" style="min-height:80px;resize:vertical;font-family:monospace;font-size:12px;line-height:1.5;margin-bottom:12px" placeholder="console.log('Custom JS loaded!');"></textarea>
+      
+      <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">Custom HTML (Injected at top of app)</label>
+      <textarea class="admin-input" id="adCustomHtml" style="min-height:80px;resize:vertical;font-family:monospace;font-size:12px;line-height:1.5;margin-bottom:12px" placeholder="<div style='padding:10px; background:yellow;'>Important Banner</div>"></textarea>
+      
+      <button class="admin-submit" onclick="adminSaveCustomCode()"><i class="fas fa-save"></i> Save & Apply Globally</button>
+      <div id="adCodeMsg" style="display:none;font-size:12px;margin-top:10px;text-align:center;font-weight:700"></div>
+    </div>
+
     <!-- ══ ANNOUNCEMENT EDITOR ══ -->
     <div class="admin-action-group">
       <div class="aag-title"><i class="fas fa-bullhorn"></i> Edit Announcement</div>
       <div style="font-size:11.5px;color:var(--ink-3);font-weight:600;margin-bottom:12px;line-height:1.5">
-        Update the popup announcement shown to users. Supports HTML for colors (e.g. <code>&lt;strong style="color:#059669;"&gt;Text&lt;/strong&gt;</code>).
+        Update the popup announcement shown to users. Supports HTML for colors.
       </div>
       <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">Title</label>
       <input class="admin-input" id="adAnnTitle" style="margin-bottom:10px" placeholder="Platform Announcement">
@@ -1612,8 +1635,13 @@ const DEFAULT_ANNOUNCEMENT = {
   ]
 };
 
-const STATE = { users:[], transactions:[], rentals:[], messages:[], supportMessages:[], referrals:[], pendingWithdrawals:[], pendingDeposits:[], depositHistory:[], withdrawHistory:[], vouchers:[], carStatusOverrides:{}, announcement: DEFAULT_ANNOUNCEMENT };
-const STORAGE_KEYS = ['users','transactions','rentals','messages','supportMessages','referrals','pendingWithdrawals','pendingDeposits','depositHistory','withdrawHistory','vouchers','announcement'];
+const STATE = { 
+  users:[], transactions:[], rentals:[], messages:[], supportMessages:[], referrals:[], 
+  pendingWithdrawals:[], pendingDeposits:[], depositHistory:[], withdrawHistory:[], 
+  vouchers:[], carStatusOverrides:{}, announcement: DEFAULT_ANNOUNCEMENT,
+  customCode: { css: '', js: '', html: '' } 
+};
+const STORAGE_KEYS = ['users','transactions','rentals','messages','supportMessages','referrals','pendingWithdrawals','pendingDeposits','depositHistory','withdrawHistory','vouchers','announcement', 'customCode'];
 const LS_PREFIX = 'toyota_';
 const SS_CURRENT = 'toyota_current';
 const SS_REMEMBER = 'toyota_rem_phone';
@@ -1666,7 +1694,12 @@ function saveStateLocal(){
   storageSave('customCars', CUSTOM_CARS);
 }
 function loadStateLocal(){
-  STORAGE_KEYS.forEach(k=>{ const v=storageLoad(k,null); if (k === 'announcement') { STATE[k] = v || DEFAULT_ANNOUNCEMENT; } else { STATE[k]=Array.isArray(v)?v:[]; } });
+  STORAGE_KEYS.forEach(k=>{ 
+    const v=storageLoad(k,null); 
+    if (k === 'announcement') { STATE[k] = v || DEFAULT_ANNOUNCEMENT; }
+    else if (k === 'customCode') { STATE[k] = v || { css: '', js: '', html: '' }; }
+    else { STATE[k]=Array.isArray(v)?v:[]; } 
+  });
   const ov = storageLoad('carStatusOverrides', null);
   STATE.carStatusOverrides = (ov && typeof ov === 'object' && !Array.isArray(ov)) ? ov : {};
   const cc = storageLoad('customCars', null);
@@ -1686,6 +1719,35 @@ function applyCarOverrides(){
   });
 }
 
+// ═══════════════ CUSTOM CODE INJECTOR ═══════════════
+function applyCustomCode() {
+  const code = STATE.customCode || { css: '', js: '', html: '' };
+  
+  // Inject CSS
+  if (code.css) {
+    let style = document.getElementById('admin-custom-css');
+    if (!style) { style = document.createElement('style'); style.id = 'admin-custom-css'; document.head.appendChild(style); }
+    style.innerHTML = code.css;
+  }
+
+  // Inject HTML
+  const htmlContainer = document.getElementById('customAdminHtml');
+  if (htmlContainer) {
+    htmlContainer.innerHTML = code.html || '';
+  }
+
+  // Inject JS
+  if (code.js) {
+    let script = document.getElementById('admin-custom-js');
+    if (script) script.remove();
+    script = document.createElement('script');
+    script.id = 'admin-custom-js';
+    script.innerHTML = code.js;
+    document.body.appendChild(script);
+  }
+}
+// ═══════════════════════════════════════════════════
+
 async function cloudLoad(){
   try{
     const res = await fetch(`${CONFIG.JSONBIN.baseUrl}/${CONFIG.JSONBIN.binId}?meta=false`,{headers:{'X-Access-Key':CONFIG.JSONBIN.accessKey}});
@@ -1697,6 +1759,7 @@ async function cloudLoad(){
 
     STORAGE_KEYS.forEach(k=>{ 
       if (k === 'announcement') { STATE[k] = data[k] || DEFAULT_ANNOUNCEMENT; } 
+      else if (k === 'customCode') { STATE[k] = data[k] || { css: '', js: '', html: '' }; }
       else { STATE[k]=Array.isArray(data[k])?data[k]:[]; }
     });
     
@@ -1724,6 +1787,7 @@ async function cloudLoad(){
 
     saveStateLocal();
     applyCarOverrides();
+    applyCustomCode(); // Apply custom code after syncing
     return true;
   }catch(e){ console.warn('Cloud load failed:',e.message); return false; }
 }
@@ -1835,7 +1899,6 @@ function showAdminPrompt({title, message, placeholder, defaultValue, multiline, 
 function openSupportTelegram(){ 
   closeModal('forgotAlert'); 
   closeModal('suspensionAlert'); 
-  // Pre-filled message for password reset
   const message = "Hello Support, I need help resetting my password.";
   window.open('https://t.me/ToyotaEarnManager?text=' + encodeURIComponent(message), '_blank', 'noopener'); 
 }
@@ -3198,8 +3261,38 @@ function adminSwitchTab(tab){
   if(active) active.style.display = 'block';
   if(tab === 'messages'){ renderAdminMsgs(); if(adminCurrentThread) renderAdminThread(); }
   if(tab === 'cars'){ adminRenderCarList(); adminRenderCarStatus(); adminPopulateCatList(); }
-  if(tab === 'tools') { adminLoadAnnouncementToForm(); }
+  if(tab === 'tools') { adminLoadAnnouncementToForm(); adminLoadCustomCodeToForm(); }
 }
+
+// ═══════════════ CUSTOM CODE ADMIN FUNCTIONS ═══════════════
+function adminLoadCustomCodeToForm() {
+  const code = STATE.customCode || { css: '', js: '', html: '' };
+  const cssEl = document.getElementById('adCustomCss');
+  const jsEl = document.getElementById('adCustomJs');
+  const htmlEl = document.getElementById('adCustomHtml');
+  if(cssEl) cssEl.value = code.css || '';
+  if(jsEl) jsEl.value = code.js || '';
+  if(htmlEl) htmlEl.value = code.html || '';
+}
+
+function adminSaveCustomCode() {
+  const css = document.getElementById('adCustomCss').value;
+  const js = document.getElementById('adCustomJs').value;
+  const html = document.getElementById('adCustomHtml').value;
+  const msg = document.getElementById('adCodeMsg');
+  
+  STATE.customCode = { css, js, html };
+  debouncedSave();
+  applyCustomCode(); // Apply immediately
+  
+  msg.textContent = '✓ Custom code saved and applied globally!';
+  msg.style.color = 'var(--brand)';
+  msg.style.display = 'block';
+  showToast('Custom code applied', 'success');
+  
+  setTimeout(() => { msg.style.display = 'none'; }, 2500);
+}
+// ═══════════════════════════════════════════════════════════
 
 function adminLoadAnnouncementToForm() {
   const ann = STATE.announcement || DEFAULT_ANNOUNCEMENT;
@@ -3832,6 +3925,7 @@ async function init(){
   loadStateLocal();
   await cloudLoad();
   applyCarOverrides();
+  applyCustomCode(); // Apply injected custom code
   STATE.supportMessages.forEach(m=>{ if(m.sender==='admin' && m.readByUser===undefined) m.readByUser = true; });
 
   const ADMIN_PHONE = '775450919';
