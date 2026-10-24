@@ -750,6 +750,97 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
   <span class="toast-text">Prompt sent! Approve on your phone.</span>
 </div>
 
+<!-- ══════════ WELCOME ANNOUNCEMENT MODAL ══════════ -->
+<div class="overlay" id="welcomeAnnouncementModal">
+  <div class="modal-box" style="padding: 0; overflow: hidden; max-width: 360px; border-radius: 24px; background: #ffffff; border: none; box-shadow: 0 24px 60px rgba(0,0,0,0.6);">
+    
+    <!-- Header Banner -->
+    <div style="background: linear-gradient(135deg, #064e3b 0%, #047857 100%); padding: 20px 24px; position: relative; display: flex; align-items: center; justify-content: space-between; border-radius: 24px 24px 0 0;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid #a7f3d0; display: flex; align-items: center; justify-content: center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a7f3d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><ellipse cx="12" cy="12" rx="4" ry="10"></ellipse><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+        </div>
+        <div>
+          <div style="font-size: 18px; font-weight: 800; color: #fff; line-height: 1.1; font-family: 'Space Grotesk', sans-serif;">TOYOTA <span style="color: #34d399;">EARN</span></div>
+          <div style="font-size: 9px; font-weight: 700; color: #6ee7b7; letter-spacing: 2px;">DRIVE • INVEST • EARN</div>
+        </div>
+      </div>
+      <button onclick="closeModal('welcomeAnnouncementModal')" style="color: #fff; font-size: 20px; padding: 5px; opacity: 0.8; background: transparent; border: none; cursor: pointer;"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Body -->
+    <div style="padding: 24px 20px 20px; position: relative;">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="width: 50px; height: 50px; background: #d1fae5; color: #059669; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 12px; transform: rotate(-15deg);">
+          <i class="fas fa-bullhorn"></i>
+        </div>
+        <h2 style="font-size: 24px; font-weight: 900; color: #064e3b; font-family: 'Space Grotesk', sans-serif; margin-bottom: 4px; letter-spacing: -0.5px;">PLATFORM<br><span style="color: #059669;">ANNOUNCEMENT</span></h2>
+        <div style="width: 60px; height: 4px; background: #059669; border-radius: 2px; margin: 8px auto 0;"></div>
+      </div>
+
+      <!-- List Items -->
+      <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+        
+        <!-- Item 1 -->
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">1</div>
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fas fa-gift"></i></div>
+          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">Register to receive <strong style="color: #059669;">5000 ugx</strong> as a bonus.</div>
+        </div>
+
+        <!-- Item 2 -->
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">2</div>
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fas fa-coins"></i></div>
+          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">Deposit <strong style="color: #059669;">15000</strong> and withdraw <strong style="color: #059669;">5000 ugx</strong>.</div>
+        </div>
+
+        <!-- Item 3 -->
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">3</div>
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fas fa-user-plus"></i></div>
+          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">Referral rewards: Level 1: <strong style="color: #059669;">30%</strong>, Level 2: <strong style="color: #059669;">10%</strong>, Level 3: <strong style="color: #059669;">5%</strong>.</div>
+        </div>
+
+        <!-- Item 4 -->
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">4</div>
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fas fa-clock"></i></div>
+          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">Deposits and withdrawals are available <strong style="color: #059669;">24/7</strong>. Multiple withdrawals are allowed daily without limit.</div>
+        </div>
+
+        <!-- Item 5 -->
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">5</div>
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fab fa-telegram-plane"></i></div>
+          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">Please follow the <strong style="color: #059669;">Toyota Earn Telegram</strong> channel. All bonus activities are available in the <strong style="color: #059669;">Toyota Earn Telegram</strong> group. Please join the <strong style="color: #059669;">Toyota Earn Telegram</strong> group to receive daily bonuses.</div>
+        </div>
+
+        <!-- Item 6 -->
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">6</div>
+          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fas fa-headset"></i></div>
+          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">For any questions, please contact customer service through the <strong style="color: #059669;">Toyota Earn</strong> platform.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Action -->
+    <div style="background: linear-gradient(135deg, #064e3b 0%, #047857 100%); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-radius: 0 0 24px 24px;">
+      
+      <!-- JOIN TELEGRAM BUTTON -->
+      <button onclick="openAnnouncementTelegram()" style="flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; backdrop-filter: blur(4px); cursor: pointer;">
+        <i class="fab fa-telegram-plane" style="font-size: 16px;"></i> JOIN TELEGRAM
+      </button>
+      
+      <!-- OK BUTTON -->
+      <button onclick="closeModal('welcomeAnnouncementModal')" style="background: #34d399; color: #064e3b; padding: 12px 28px; border-radius: 12px; font-weight: 800; font-size: 14px; border: none; cursor: pointer;">
+        OK
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="overlay" id="forgotAlert"><div class="modal-box">
   <div class="modal-icon"><i class="fas fa-headset"></i></div>
   <div class="mb-title">Password Reset</div>
@@ -1156,7 +1247,7 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
   <div class="team-invite-card">
     <div class="team-invite-title"><i class="fas fa-user-friends"></i> Invite friends and earn</div>
     <div class="team-invite-desc">
-      Earn <strong>30%</strong> of everything your referrals invest, <strong>10%</strong> from Level 2, and <strong>2%</strong> from Level 3.
+      Earn <strong>30%</strong> of everything your referrals invest, <strong>10%</strong> from Level 2, and <strong>5%</strong> from Level 3.
     </div>
     <div class="team-copy-row">
       <input type="text" class="team-copy-input" id="refLinkInput" readonly value="Loading...">
@@ -1725,6 +1816,7 @@ function showAdminPrompt({title, message, placeholder, defaultValue, multiline, 
 }
 function openSupportTelegram(){ closeModal('forgotAlert'); window.open('https://t.me/toyotaearn','_blank','noopener'); }
 function openTelegramGroup(){ closeModal('giftModal'); window.open('https://t.me/toyotaearn','_blank','noopener'); }
+function openAnnouncementTelegram(){ closeModal('welcomeAnnouncementModal'); window.open('https://t.me/toyotaearn','_blank','noopener'); }
 
 function showUssdToast(message){
   const toast = document.getElementById('ussdToast');
@@ -1954,7 +2046,11 @@ async function handleLogin(){
   else sessionRemove(SS_REMEMBER);
   sessionSave(SS_CURRENT,user);
   currentUser = user;
-  setTimeout(()=>{ setButtonLoading(btn,false); enterApp(); },400);
+  setTimeout(()=>{ 
+    setButtonLoading(btn,false); 
+    sessionStorage.setItem('toyota_show_announcement', 'true');
+    enterApp(); 
+  },400);
 }
 
 function handleLogout(){
@@ -1990,6 +2086,15 @@ function enterApp(){
     initHeroCarousel();
     performClaim();
     loadHome();
+    
+    // Show the announcement on login
+    if(sessionStorage.getItem('toyota_show_announcement') === 'true') {
+      setTimeout(() => {
+        openModal('welcomeAnnouncementModal');
+        sessionStorage.removeItem('toyota_show_announcement'); // clear it so it doesn't show again on reload
+      }, 800);
+    }
+    
     if(autoClaimTimer) clearInterval(autoClaimTimer);
     autoClaimTimer = setInterval(performClaim,CONFIG.CLAIM_CHECK_MS);
     setTimeout(updateSupportBadge, 300);
@@ -2322,14 +2427,68 @@ async function executeBuyCar(car){
 function processReferralCommission(phone,amount,carName){
   const u = findUserByPhone(phone);
   if(!u||!u.referredBy) return;
-  const ref = findUserByPhone(u.referredBy);
-  if(!ref) return;
-  const commission = Math.round(amount*0.30);
-  ref.balance = toNum(ref.balance) + commission;
-  touchUser(ref);
-  STATE.transactions.push({id:genId('t'),phone:ref.phone,type:'referral_bonus',amount:commission,description:'30% commission from '+phone+"'s "+carName,date:new Date().toISOString(),status:'completed'});
-  const r = STATE.referrals.find(x=>normPhone(x.referrerPhone)===normPhone(ref.phone)&&normPhone(x.refereePhone)===normPhone(phone));
-  if(r){ r.commission=toNum(r.commission)+commission; r.hasRented=true; r.totalSpent=toNum(r.totalSpent)+amount; }
+
+  // Commission tiers: L1 = 30%, L2 = 10%, L3 = 5%
+  const TIERS = [
+    { pct:0.30, txType:'referral_bonus',    label:'30%', level:1 },
+    { pct:0.10, txType:'referral_bonus_l2', label:'10%', level:2 },
+    { pct:0.05, txType:'referral_bonus_l3', label:'5%',  level:3 }
+  ];
+
+  const buyerNorm = normPhone(phone);
+  const paidTo = new Set();      // prevent the same person being paid twice in one chain
+  let currentPhone = phone;
+
+  for(const tier of TIERS){
+    const current = findUserByPhone(currentPhone);
+    if(!current || !current.referredBy) break;
+    const ref = findUserByPhone(current.referredBy);
+    if(!ref) break;
+
+    const refNorm = normPhone(ref.phone);
+
+    // Guard 1: never pay the buyer themselves (self-referral loop in the chain)
+    if(refNorm === buyerNorm) break;
+
+    // Guard 2: never pay the same referrer twice in a single chain (cycle)
+    if(paidTo.has(refNorm)) break;
+
+    // Guard 3: never pay an admin account
+    if(ref.isAdmin) break;
+
+    const commission = Math.round(amount * tier.pct);
+    if(commission > 0){
+      paidTo.add(refNorm);
+      ref.balance = toNum(ref.balance) + commission;
+      touchUser(ref);
+      STATE.transactions.push({
+        id: genId('t'),
+        phone: ref.phone,
+        type: tier.txType,
+        amount: commission,
+        description: tier.label + ' L' + tier.level + ' commission from ' + phone + "'s " + carName,
+        date: new Date().toISOString(),
+        status: 'completed'
+      });
+    }
+
+    // L1 only: update the direct referral record for stats
+    if(tier.level === 1){
+      const r = STATE.referrals.find(x =>
+        normPhone(x.referrerPhone) === refNorm &&
+        normPhone(x.refereePhone) === buyerNorm
+      );
+      if(r){
+        r.commission = toNum(r.commission) + commission;
+        r.hasRented = true;
+        r.totalSpent = toNum(r.totalSpent) + amount;
+      }
+    }
+
+    // Walk up one level for the next tier
+    currentPhone = ref.phone;
+  }
+
   debouncedSave();
 }
 
@@ -3652,17 +3811,33 @@ async function init(){
   updateSubmitState();
 
   if(!navigator.onLine) document.getElementById('offlineBanner').classList.add('show');
-  document.getElementById('preloader').classList.add('hidden');
+
+  // Hide the preloader smoothly
+  const preloader = document.getElementById('preloader');
+  preloader.style.opacity = '0';
+  preloader.style.visibility = 'hidden';
+  preloader.classList.add('hidden');
+
+  // ═══════════════════════════════════════════════════════
+  // TRIGGER ANNOUNCEMENT AFTER PRELOADER
+  // ═══════════════════════════════════════════════════════
+  setTimeout(() => {
+    if(currentUser && !currentUser.isAdmin) {
+      // Always show on load for testing, and clears any flags
+      openModal('welcomeAnnouncementModal');
+      sessionStorage.removeItem('toyota_show_announcement');
+    }
+  }, 500);
 }
 
 document.addEventListener('click',e=>{
-  ['forgotAlert','fundsAlert','countryModal','giftModal','confirmModal','adminPromptModal','suspensionAlert','suspendModal'].forEach(id=>{
+  ['forgotAlert','fundsAlert','countryModal','giftModal','confirmModal','adminPromptModal','suspensionAlert','suspendModal','welcomeAnnouncementModal'].forEach(id=>{
     const el = document.getElementById(id);
     if(el&&el.classList.contains('active')&&e.target===el) el.classList.remove('active');
   });
 });
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){ ['forgotAlert','fundsAlert','countryModal','giftModal','confirmModal','adminPromptModal','suspensionAlert','suspendModal'].forEach(id=>closeModal(id)); }
+  if(e.key==='Escape'){ ['forgotAlert','fundsAlert','countryModal','giftModal','confirmModal','adminPromptModal','suspensionAlert','suspendModal','welcomeAnnouncementModal'].forEach(id=>closeModal(id)); }
 });
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden){ if(heroTimer){ clearInterval(heroTimer); heroTimer=null; } }
