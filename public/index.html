@@ -159,6 +159,7 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .car-card .cc-img{width:128px;flex-shrink:0;background:#000;position:relative;overflow:hidden}
 .car-card .cc-img img{width:100%;height:100%;object-fit:cover;display:block}
 .car-card .cc-badge{position:absolute;top:10px;left:10px;background:linear-gradient(135deg,#00d4a0,#00b389);color:#fff;font-size:9px;font-weight:800;padding:4px 9px;border-radius:6px;letter-spacing:.6px;z-index:2}
+.car-card .cc-badge.custom{background:linear-gradient(135deg,#f59e0b,#d97706)}
 .car-card .cc-badge.soldout{background:linear-gradient(135deg,#f43f5e,#dc2626)}
 .car-card .cc-badge.comingsoon{background:linear-gradient(135deg,#6366f1,#4f46e5)}
 .car-card .cc-badge.almostsoldout{background:linear-gradient(135deg,#f59e0b,#d97706)}
@@ -752,89 +753,40 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 
 <!-- ══════════ WELCOME ANNOUNCEMENT MODAL ══════════ -->
 <div class="overlay" id="welcomeAnnouncementModal">
-  <div class="modal-box" style="padding: 0; overflow: hidden; max-width: 360px; border-radius: 24px; background: #ffffff; border: none; box-shadow: 0 24px 60px rgba(0,0,0,0.6);">
+  <div class="modal-box" style="padding: 0; overflow: hidden; max-width: 360px; border-radius: 20px; background: #ffffff; border: none; box-shadow: 0 24px 60px rgba(0,0,0,0.6);">
     
     <!-- Header Banner -->
-    <div style="background: linear-gradient(135deg, #064e3b 0%, #047857 100%); padding: 20px 24px; position: relative; display: flex; align-items: center; justify-content: space-between; border-radius: 24px 24px 0 0;">
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid #a7f3d0; display: flex; align-items: center; justify-content: center;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a7f3d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><ellipse cx="12" cy="12" rx="4" ry="10"></ellipse><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+    <div style="background: linear-gradient(135deg, #064e3b 0%, #047857 100%); padding: 16px 20px; position: relative; display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 30px; height: 30px; border-radius: 50%; border: 2px solid #a7f3d0; display: flex; align-items: center; justify-content: center;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a7f3d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><ellipse cx="12" cy="12" rx="4" ry="10"></ellipse><line x1="2" y1="12" x2="22" y2="12"></line></svg>
         </div>
         <div>
-          <div style="font-size: 18px; font-weight: 800; color: #fff; line-height: 1.1; font-family: 'Space Grotesk', sans-serif;">TOYOTA <span style="color: #34d399;">EARN</span></div>
-          <div style="font-size: 9px; font-weight: 700; color: #6ee7b7; letter-spacing: 2px;">DRIVE • INVEST • EARN</div>
+          <div style="font-size: 16px; font-weight: 800; color: #fff; line-height: 1.1; font-family: 'Space Grotesk', sans-serif;">TOYOTA <span style="color: #34d399;">EARN</span></div>
         </div>
       </div>
-      <button onclick="closeModal('welcomeAnnouncementModal')" style="color: #fff; font-size: 20px; padding: 5px; opacity: 0.8; background: transparent; border: none; cursor: pointer;"><i class="fas fa-times"></i></button>
+      <button onclick="closeModal('welcomeAnnouncementModal')" style="color: #fff; font-size: 18px; padding: 5px; opacity: 0.8; background: transparent; border: none; cursor: pointer;"><i class="fas fa-times"></i></button>
     </div>
 
     <!-- Body -->
-    <div style="padding: 24px 20px 20px; position: relative;">
-      <div style="text-align: center; margin-bottom: 24px;">
-        <div style="width: 50px; height: 50px; background: #d1fae5; color: #059669; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 12px; transform: rotate(-15deg);">
-          <i class="fas fa-bullhorn"></i>
-        </div>
-        <h2 style="font-size: 24px; font-weight: 900; color: #064e3b; font-family: 'Space Grotesk', sans-serif; margin-bottom: 4px; letter-spacing: -0.5px;">PLATFORM<br><span style="color: #059669;">ANNOUNCEMENT</span></h2>
-        <div style="width: 60px; height: 4px; background: #059669; border-radius: 2px; margin: 8px auto 0;"></div>
+    <div style="padding: 20px; position: relative;">
+      <div style="text-align: center; margin-bottom: 16px;">
+        <h2 id="announcementTitle" style="font-size: 20px; font-weight: 900; color: #064e3b; font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.5px;">PLATFORM ANNOUNCEMENT</h2>
+        <div style="width: 50px; height: 3px; background: #059669; border-radius: 2px; margin: 6px auto 0;"></div>
       </div>
 
-      <!-- List Items -->
-      <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
-        
-        <!-- Item 1 -->
-        <div style="display: flex; gap: 12px; align-items: flex-start;">
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">1</div>
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fas fa-gift"></i></div>
-          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">Register to receive <strong style="color: #059669;">5000 ugx</strong> as a bonus.</div>
-        </div>
-
-        <!-- Item 2 -->
-        <div style="display: flex; gap: 12px; align-items: flex-start;">
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">2</div>
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fas fa-coins"></i></div>
-          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">Deposit <strong style="color: #059669;">15000</strong> and withdraw <strong style="color: #059669;">5000 ugx</strong>.</div>
-        </div>
-
-        <!-- Item 3 -->
-        <div style="display: flex; gap: 12px; align-items: flex-start;">
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">3</div>
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fas fa-user-plus"></i></div>
-          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">Referral rewards: Level 1: <strong style="color: #059669;">30%</strong>, Level 2: <strong style="color: #059669;">10%</strong>, Level 3: <strong style="color: #059669;">5%</strong>.</div>
-        </div>
-
-        <!-- Item 4 -->
-        <div style="display: flex; gap: 12px; align-items: flex-start;">
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">4</div>
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fas fa-clock"></i></div>
-          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">Deposits and withdrawals are available <strong style="color: #059669;">24/7</strong>. Multiple withdrawals are allowed daily without limit.</div>
-        </div>
-
-        <!-- Item 5 -->
-        <div style="display: flex; gap: 12px; align-items: flex-start;">
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">5</div>
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fab fa-telegram-plane"></i></div>
-          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">Please follow the <strong style="color: #059669;">Toyota Earn Telegram</strong> channel. All bonus activities are available in the <strong style="color: #059669;">Toyota Earn Telegram</strong> group. Please join the <strong style="color: #059669;">Toyota Earn Telegram</strong> group to receive daily bonuses.</div>
-        </div>
-
-        <!-- Item 6 -->
-        <div style="display: flex; gap: 12px; align-items: flex-start;">
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #059669, #047857); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">6</div>
-          <div style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fas fa-headset"></i></div>
-          <div style="font-size: 13.5px; color: #1f2937; line-height: 1.4; font-weight: 500; padding-top: 4px;">For any questions, please contact customer service through the <strong style="color: #059669;">Toyota Earn</strong> platform.</div>
-        </div>
+      <!-- Dynamic List Items -->
+      <div id="announcementList" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+        <!-- Injected via JS -->
       </div>
     </div>
 
     <!-- Footer Action -->
-    <div style="background: linear-gradient(135deg, #064e3b 0%, #047857 100%); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-radius: 0 0 24px 24px;">
-      
-      <!-- JOIN TELEGRAM BUTTON -->
-      <button onclick="openAnnouncementTelegram()" style="flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; backdrop-filter: blur(4px); cursor: pointer;">
-        <i class="fab fa-telegram-plane" style="font-size: 16px;"></i> JOIN TELEGRAM
+    <div style="background: #f8fafc; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid #e2e8f0;">
+      <button onclick="openAnnouncementTelegram()" style="flex: 1; background: #064e3b; border: none; color: #fff; padding: 12px; border-radius: 10px; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;">
+        <i class="fab fa-telegram-plane"></i> JOIN
       </button>
-      
-      <!-- OK BUTTON -->
-      <button onclick="closeModal('welcomeAnnouncementModal')" style="background: #34d399; color: #064e3b; padding: 12px 28px; border-radius: 12px; font-weight: 800; font-size: 14px; border: none; cursor: pointer;">
+      <button onclick="closeModal('welcomeAnnouncementModal')" style="background: #34d399; color: #064e3b; padding: 12px 24px; border-radius: 10px; font-weight: 800; font-size: 14px; border: none; cursor: pointer;">
         OK
       </button>
     </div>
@@ -1467,6 +1419,11 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
           <label>Image URL</label>
           <input type="text" id="acImg" placeholder="https://images.unsplash.com/..." maxlength="500">
         </div>
+        <div class="full">
+          <label>Custom Badge Word (Optional)</label>
+          <input type="text" id="acCustomBadge" placeholder="e.g. HOT, LIMITED, VIP" maxlength="15">
+          <div style="font-size:10px;color:var(--ink-4);margin-top:4px;font-weight:600">If left blank, it will show "DAILY".</div>
+        </div>
         <div class="admin-car-preview" id="acPreview">
           <span class="pc-label">Total Profit</span>
           <span class="pc-value" id="acTotalPreview">—</span>
@@ -1496,6 +1453,25 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
   <!-- ══ TOOLS TAB ══ -->
   <div id="adminToolsTab" class="admin-card" style="display:none">
     <div class="admin-card-title"><i class="fas fa-sliders-h"></i> Admin Tools</div>
+
+    <!-- ══ ANNOUNCEMENT EDITOR ══ -->
+    <div class="admin-action-group">
+      <div class="aag-title"><i class="fas fa-bullhorn"></i> Edit Announcement</div>
+      <div style="font-size:11.5px;color:var(--ink-3);font-weight:600;margin-bottom:12px;line-height:1.5">
+        Update the popup announcement shown to users. Supports HTML for colors (e.g. <code>&lt;strong style="color:#059669;"&gt;Text&lt;/strong&gt;</code>).
+      </div>
+      <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">Title</label>
+      <input class="admin-input" id="adAnnTitle" style="margin-bottom:10px" placeholder="Platform Announcement">
+      
+      <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">Bullet Points (One per line)</label>
+      <textarea class="admin-input" id="adAnnItems" style="min-height:140px;resize:vertical;font-family:monospace;font-size:12px;line-height:1.5;margin-bottom:12px" placeholder="Register to get a 5000 UGX bonus...&#10;Deposit 15000 to withdraw 5000..."></textarea>
+      
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="admin-submit" style="margin:0;flex:2" onclick="adminSaveAnnouncement()"><i class="fas fa-save"></i> Save</button>
+        <button class="admin-submit" style="margin:0;flex:1;background:var(--surface);border:1px solid var(--line-2);color:#fff" onclick="openModal('welcomeAnnouncementModal')"><i class="fas fa-eye"></i> Preview</button>
+      </div>
+      <div id="adAnnMsg" style="display:none;font-size:12px;margin-top:10px;text-align:center;font-weight:700"></div>
+    </div>
 
     <div class="admin-action-group">
       <div class="aag-title"><i class="fas fa-wallet"></i> Deposit Balance Adjuster</div>
@@ -1625,8 +1601,19 @@ const HERO_CARS = [
 
 const IMG_FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='400' height='200' fill='%23161e2e'/%3E%3C/svg%3E";
 
-const STATE = { users:[], transactions:[], rentals:[], messages:[], supportMessages:[], referrals:[], pendingWithdrawals:[], pendingDeposits:[], depositHistory:[], withdrawHistory:[], vouchers:[], carStatusOverrides:{} };
-const STORAGE_KEYS = ['users','transactions','rentals','messages','supportMessages','referrals','pendingWithdrawals','pendingDeposits','depositHistory','withdrawHistory','vouchers'];
+const DEFAULT_ANNOUNCEMENT = {
+  title: 'PLATFORM ANNOUNCEMENT',
+  items: [
+    'Register to get a <strong style="color: #059669;">5000 UGX</strong> bonus.',
+    'Deposit <strong style="color: #059669;">15000</strong> to withdraw <strong style="color: #059669;">5000</strong>.',
+    'Referral rewards: L1 <strong style="color: #059669;">30%</strong>, L2 <strong style="color: #059669;">10%</strong>, L3 <strong style="color: #059669;">5%</strong>.',
+    'Deposits & withdrawals available <strong style="color: #059669;">24/7</strong>.',
+    'Join our <strong style="color: #059669;">Telegram</strong> for daily bonuses.'
+  ]
+};
+
+const STATE = { users:[], transactions:[], rentals:[], messages:[], supportMessages:[], referrals:[], pendingWithdrawals:[], pendingDeposits:[], depositHistory:[], withdrawHistory:[], vouchers:[], carStatusOverrides:{}, announcement: DEFAULT_ANNOUNCEMENT };
+const STORAGE_KEYS = ['users','transactions','rentals','messages','supportMessages','referrals','pendingWithdrawals','pendingDeposits','depositHistory','withdrawHistory','vouchers','announcement'];
 const LS_PREFIX = 'toyota_';
 const SS_CURRENT = 'toyota_current';
 const SS_REMEMBER = 'toyota_rem_phone';
@@ -1679,7 +1666,7 @@ function saveStateLocal(){
   storageSave('customCars', CUSTOM_CARS);
 }
 function loadStateLocal(){
-  STORAGE_KEYS.forEach(k=>{ const v=storageLoad(k,null); STATE[k]=Array.isArray(v)?v:[]; });
+  STORAGE_KEYS.forEach(k=>{ const v=storageLoad(k,null); if (k === 'announcement') { STATE[k] = v || DEFAULT_ANNOUNCEMENT; } else { STATE[k]=Array.isArray(v)?v:[]; } });
   const ov = storageLoad('carStatusOverrides', null);
   STATE.carStatusOverrides = (ov && typeof ov === 'object' && !Array.isArray(ov)) ? ov : {};
   const cc = storageLoad('customCars', null);
@@ -1708,7 +1695,11 @@ async function cloudLoad(){
     const myPhone = currentUser ? normPhone(currentUser.phone) : null;
     const mySnapshot = currentUser ? JSON.parse(JSON.stringify(currentUser)) : null;
 
-    STORAGE_KEYS.forEach(k=>{ STATE[k]=Array.isArray(data[k])?data[k]:[]; });
+    STORAGE_KEYS.forEach(k=>{ 
+      if (k === 'announcement') { STATE[k] = data[k] || DEFAULT_ANNOUNCEMENT; } 
+      else { STATE[k]=Array.isArray(data[k])?data[k]:[]; }
+    });
+    
     STATE.carStatusOverrides = (data.carStatusOverrides && typeof data.carStatusOverrides === 'object' && !Array.isArray(data.carStatusOverrides)) ? data.carStatusOverrides : {};
     CUSTOM_CARS = Array.isArray(data.customCars) ? data.customCars : [];
 
@@ -1754,7 +1745,34 @@ async function cloudSync(){
 window.addEventListener('online',()=>{ document.getElementById('offlineBanner').classList.remove('show'); cloudSync(); });
 window.addEventListener('offline',()=>{ document.getElementById('offlineBanner').classList.add('show'); });
 
-function openModal(id){ const el=document.getElementById(id); if(!el)return; el.classList.add('active'); }
+function renderAnnouncementModal() {
+  const ann = STATE.announcement || DEFAULT_ANNOUNCEMENT;
+  const titleEl = document.getElementById('announcementTitle');
+  if(titleEl) titleEl.textContent = ann.title;
+  
+  const icons = ['fa-gift', 'fa-coins', 'fa-user-plus', 'fa-clock', 'fab fa-telegram-plane', 'fa-headset'];
+  const listEl = document.getElementById('announcementList');
+  if(!listEl) return;
+
+  listEl.innerHTML = ann.items.map((item, i) => {
+    const isBrand = icons[i % icons.length].includes('fab');
+    const iconClass = isBrand ? icons[i % icons.length] : 'fas ' + icons[i % icons.length];
+    return `
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <div style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #f0fdf4; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+        <i class="${iconClass}"></i>
+      </div>
+      <div style="font-size: 13px; color: #374151; line-height: 1.4;">${item}</div>
+    </div>
+  `}).join('');
+}
+
+function openModal(id){ 
+  const el=document.getElementById(id); 
+  if(!el)return; 
+  if(id === 'welcomeAnnouncementModal') renderAnnouncementModal();
+  el.classList.add('active'); 
+}
 function closeModal(id){ const el=document.getElementById(id); if(el) el.classList.remove('active'); }
 function showConfirm({title,message,icon,confirmText,onConfirm}){
   document.getElementById('confirmTitle').textContent = title||'Confirm';
@@ -1814,9 +1832,13 @@ function showAdminPrompt({title, message, placeholder, defaultValue, multiline, 
   };
   openModal('adminPromptModal');
 }
-function openSupportTelegram(){ closeModal('forgotAlert'); window.open('https://t.me/toyotaearn','_blank','noopener'); }
-function openTelegramGroup(){ closeModal('giftModal'); window.open('https://t.me/toyotaearn','_blank','noopener'); }
-function openAnnouncementTelegram(){ closeModal('welcomeAnnouncementModal'); window.open('https://t.me/toyotaearn','_blank','noopener'); }
+function openSupportTelegram(){ 
+  closeModal('forgotAlert'); 
+  closeModal('suspensionAlert'); 
+  window.open('https://t.me/ToyotaEarnManager','_blank','noopener'); 
+}
+function openTelegramGroup(){ closeModal('giftModal'); window.open('https://t.me/ToyotaEarnManager','_blank','noopener'); }
+function openAnnouncementTelegram(){ closeModal('welcomeAnnouncementModal'); window.open('https://t.me/ToyotaEarnManager','_blank','noopener'); }
 
 function showUssdToast(message){
   const toast = document.getElementById('ussdToast');
@@ -2304,11 +2326,17 @@ function carCardHtml(car){
   const isComingSoon = !!car.comingSoon;
   const isAlmost = !!car.almostSoldOut && !isSoldOut && !isComingSoon && !isHidden;
   const isAdmin = currentUser && currentUser.isAdmin;
+  
   let badgeClass = '', badgeLabel = 'DAILY';
   if(isHidden){ badgeClass = 'hidden'; badgeLabel = '🚫 HIDDEN'; }
   else if(isSoldOut){ badgeClass = 'soldout'; badgeLabel = 'SOLD OUT'; }
   else if(isComingSoon){ badgeClass = 'comingsoon'; badgeLabel = 'COMING SOON'; }
   else if(isAlmost){ badgeClass = 'almostsoldout'; badgeLabel = 'ALMOST SOLD OUT'; }
+  else if(car.customBadge) {
+    badgeClass = 'custom';
+    badgeLabel = car.customBadge;
+  }
+
   let actionBtn;
   if(isSoldOut && !isAdmin){
     actionBtn = '<button class="btn-soldout" disabled><i class="fas fa-ban"></i> Sold Out</button>';
@@ -3162,7 +3190,43 @@ function adminSwitchTab(tab){
   if(active) active.style.display = 'block';
   if(tab === 'messages'){ renderAdminMsgs(); if(adminCurrentThread) renderAdminThread(); }
   if(tab === 'cars'){ adminRenderCarList(); adminRenderCarStatus(); adminPopulateCatList(); }
+  if(tab === 'tools') { adminLoadAnnouncementToForm(); }
 }
+
+function adminLoadAnnouncementToForm() {
+  const ann = STATE.announcement || DEFAULT_ANNOUNCEMENT;
+  const titleEl = document.getElementById('adAnnTitle');
+  const itemsEl = document.getElementById('adAnnItems');
+  if(titleEl) titleEl.value = ann.title;
+  if(itemsEl) itemsEl.value = ann.items.join('\n');
+}
+
+function adminSaveAnnouncement() {
+  const title = document.getElementById('adAnnTitle').value.trim();
+  const rawItems = document.getElementById('adAnnItems').value.trim();
+  const msg = document.getElementById('adAnnMsg');
+  
+  if(!title || !rawItems) {
+    msg.textContent = 'Title and items cannot be empty';
+    msg.style.color = 'var(--rose)';
+    msg.style.display = 'block';
+    return;
+  }
+  
+  // Split text by new lines and filter out empty lines
+  const items = rawItems.split('\n').map(i => i.trim()).filter(i => i);
+  
+  STATE.announcement = { title, items };
+  debouncedSave();
+  
+  msg.textContent = '✓ Announcement saved successfully!';
+  msg.style.color = 'var(--brand)';
+  msg.style.display = 'block';
+  showToast('Announcement updated', 'success');
+  
+  setTimeout(() => { msg.style.display = 'none'; }, 2500);
+}
+
 function renderAdminUsers(){
   const list = document.getElementById('adminUserList');
   const users = STATE.users.filter(u=>!u.isAdmin).sort((a,b) => new Date(b.registrationDate||0) - new Date(a.registrationDate||0));
@@ -3400,8 +3464,9 @@ function adminRenderCarStatus(){
       { key:'comingsoon', label:'🟣 Soon' },
       { key:'hidden',     label:'🚫 Hidden' }
     ];
-    const hiddenTag = c.hidden ? '<span style="background:rgba(100,116,139,.2);color:#94a3b8;font-size:9px;font-weight:800;padding:3px 8px;border-radius:6px;margin-left:8px;letter-spacing:.4px">HIDDEN FROM USERS</span>' : '';
-    return '<div class="admin-user" style="flex-direction:column;align-items:stretch"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px"><div class="au-phone" style="margin:0"><i class="fas fa-car"></i> '+esc(c.name)+hiddenTag+'</div><span style="font-size:10px;font-weight:800;color:var(--ink-4);letter-spacing:.5px">#'+c.id+'</span></div><div class="admin-chips" style="margin:0;gap:6px">'+chips.map(ch => '<button class="admin-chip" style="'+(current===ch.key?'background:linear-gradient(135deg,#00d4a0,#00b389);color:#0a0e1a;border-color:transparent;':'')+'" onclick="adminSetCarStatus('+c.id+',\''+ch.key+'\')">'+ch.label+'</button>').join('')+'</div></div>';
+    const hiddenTag = c.hidden ? '<span style="background:rgba(100,116,139,.2);color:#94a3b8;font-size:9px;font-weight:800;padding:3px 8px;border-radius:6px;margin-left:8px;letter-spacing:.4px">HIDDEN</span>' : '';
+    const customTag = c.customBadge ? '<span style="background:rgba(255,184,0,.2);color:var(--gold);font-size:9px;font-weight:800;padding:3px 8px;border-radius:6px;margin-left:8px;letter-spacing:.4px">BADGE: '+esc(c.customBadge)+'</span>' : '';
+    return '<div class="admin-user" style="flex-direction:column;align-items:stretch"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px"><div class="au-phone" style="margin:0"><i class="fas fa-car"></i> '+esc(c.name)+hiddenTag+customTag+'</div><span style="font-size:10px;font-weight:800;color:var(--ink-4);letter-spacing:.5px">#'+c.id+'</span></div><div class="admin-chips" style="margin:0;gap:6px">'+chips.map(ch => '<button class="admin-chip" style="'+(current===ch.key?'background:linear-gradient(135deg,#00d4a0,#00b389);color:#0a0e1a;border-color:transparent;':'')+'" onclick="adminSetCarStatus('+c.id+',\''+ch.key+'\')">'+ch.label+'</button>').join('')+'</div></div>';
   }).join('');
 }
 async function adminSetCarStatus(carId, status){
@@ -3452,6 +3517,7 @@ function adminEditCar(id){
   document.getElementById('acPrice').value = car.price;
   document.getElementById('acDaily').value = car.daily;
   document.getElementById('acImg').value = car.img;
+  document.getElementById('acCustomBadge').value = car.customBadge || '';
   document.getElementById('acSubmitLabel').textContent = 'Save Changes';
   document.getElementById('acCancelBtn').style.display = 'flex';
   updateCarPreview();
@@ -3460,7 +3526,7 @@ function adminEditCar(id){
 }
 function adminCancelCarEdit(){
   editingCarId = null;
-  ['acName','acCat','acDays','acPrice','acDaily','acImg'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  ['acName','acCat','acDays','acPrice','acDaily','acImg','acCustomBadge'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
   document.getElementById('acSubmitLabel').textContent = 'Add Car';
   document.getElementById('acCancelBtn').style.display = 'none';
   document.getElementById('acMsg').style.display = 'none';
@@ -3480,6 +3546,7 @@ async function adminSaveCar(){
   const price = parseInt(document.getElementById('acPrice').value, 10);
   const daily = parseInt(document.getElementById('acDaily').value, 10);
   const img = document.getElementById('acImg').value.trim() || 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=80';
+  const customBadge = document.getElementById('acCustomBadge').value.trim();
   const msg = document.getElementById('acMsg');
   msg.style.display = 'none';
   const showErr = (t) => { msg.textContent = '✗ ' + t; msg.style.background = 'rgba(244,63,94,.1)'; msg.style.color = 'var(--rose)'; msg.style.display = 'block'; };
@@ -3490,13 +3557,13 @@ async function adminSaveCar(){
   if(!/^https?:\/\//.test(img)){ return showErr('Image URL must start with http(s)://'); }
   if(editingCarId !== null){
     const bi = BUILT_IN_CARS.find(c => c.id === editingCarId);
-    if(bi){ bi.name = name; bi.cat = cat; bi.days = days; bi.price = price; bi.daily = daily; bi.img = img; delete bi.totalProfit; }
+    if(bi){ bi.name = name; bi.cat = cat; bi.days = days; bi.price = price; bi.daily = daily; bi.img = img; bi.customBadge = customBadge; delete bi.totalProfit; }
     const cu = CUSTOM_CARS.find(c => c.id === editingCarId);
-    if(cu){ cu.name = name; cu.cat = cat; cu.days = days; cu.price = price; cu.daily = daily; cu.img = img; delete cu.totalProfit; }
+    if(cu){ cu.name = name; cu.cat = cat; cu.days = days; cu.price = price; cu.daily = daily; cu.img = img; cu.customBadge = customBadge; delete cu.totalProfit; }
     showToast('Car updated', 'success');
   } else {
     const newId = Date.now();
-    CUSTOM_CARS.push({ id: newId, name, cat, days, price, daily, img, isCustom: true, createdAt: new Date().toISOString(), createdBy: currentUser.phone });
+    CUSTOM_CARS.push({ id: newId, name, cat, days, price, daily, img, customBadge, isCustom: true, createdAt: new Date().toISOString(), createdBy: currentUser.phone });
     showToast('Car "'+name+'" added', 'success');
   }
   debouncedSave();
