@@ -517,7 +517,7 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .auth-control .ac-icon{padding-left:15px;color:var(--ink-3);font-size:13px}
 .auth-control input{flex:1;padding:15px 12px;border:none;background:transparent;font-size:14.5px;font-weight:600;color:#fff;outline:none;min-width:0;font-family:inherit}
 .auth-control input::placeholder{color:var(--ink-4);font-weight:500}
-.auth-control .ac-prefix{padding:15px 13px;font-size:13px;font-weight:800;color:var(--ink-2);border-right:1.5px solid var(--line);background:var(--surface-2);font-family:'Space Grotesk',sans-serif}
+.auth-control .ac-prefix{padding:15px 13px;font-size:13px;font-weight:800;color:var(--ink-2);border-right:1.5px solid var(--line);background:var(--surface-2);font-family:'Space Grotesk',sans-serif;cursor:pointer;display:flex;align-items:center;gap:4px}
 .auth-control .ac-eye{padding:0 15px;color:var(--ink-3);font-size:13px;align-self:stretch;display:flex;align-items:center}
 .auth-country{width:100%;display:flex;align-items:center;gap:12px;padding:15px 14px;background:var(--bg-2);border:1.5px solid var(--line);border-radius:13px;color:#fff;font-size:14.5px;font-family:inherit;font-weight:600}
 .auth-country .ac-flag{font-size:20px}
@@ -849,7 +849,7 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
         <label class="auth-field-label" for="loginPhone">Phone Number</label>
         <div class="auth-control" id="loginPhoneWrap">
           <span class="ac-icon"><i class="fas fa-phone"></i></span>
-          <span class="ac-prefix">+256</span>
+          <span class="ac-prefix" id="loginPrefix" onclick="openCountryModal('login')" style="cursor:pointer;display:flex;align-items:center;gap:4px">+256 <i class="fas fa-caret-down" style="font-size:10px;color:var(--ink-4)"></i></span>
           <input type="tel" id="loginPhone" placeholder="712 345 678" autocomplete="tel" inputmode="tel" />
         </div>
       </div>
@@ -1543,6 +1543,7 @@ const SS_REMEMBER = 'toyota_rem_phone';
 let currentUser = null;
 let selRegCountry = CONFIG.DEFAULT_COUNTRY;
 let selWdCountry = CONFIG.DEFAULT_COUNTRY;
+let selLoginCountry = CONFIG.DEFAULT_COUNTRY;
 let pendingCountryTarget = 'register';
 let selectedWdNetwork = 'mtn';
 let currentCat = 'all';
@@ -1757,7 +1758,7 @@ function showToast(msg,type){
 
 function openCountryModal(target){ pendingCountryTarget=target; renderCountries(); openModal('countryModal'); }
 function renderCountries(){
-  const sel = pendingCountryTarget==='register'?selRegCountry:pendingCountryTarget==='withdraw'?selWdCountry:CONFIG.DEFAULT_COUNTRY;
+  const sel = pendingCountryTarget==='register'?selRegCountry:pendingCountryTarget==='withdraw'?selWdCountry:selLoginCountry;
   document.getElementById('countryList').innerHTML = Object.values(CONFIG.COUNTRIES).map(c =>
     '<div class="country-item '+(c.code===sel?'selected':'')+'" onclick="selectCountry(\''+c.code+'\')"><span class="ci-flag">'+c.flag+'</span><span class="ci-name">'+esc(c.name)+' ('+c.currency+')</span><span class="ci-radio"></span></div>'
   ).join('');
@@ -1771,9 +1772,12 @@ function selectCountry(code){
     document.getElementById('regCur').textContent = c.currency;
     document.getElementById('regPrefix').textContent = c.dial;
     document.getElementById('regPhone').placeholder = c.ph;
-  }else if(pendingCountryTarget==='withdraw'){
+  } else if(pendingCountryTarget==='withdraw'){
     selWdCountry = code;
     loadWithdrawPage();
+  } else if(pendingCountryTarget==='login'){
+    selLoginCountry = code;
+    document.getElementById('loginPrefix').innerHTML = c.dial + ' <i class="fas fa-caret-down" style="font-size:10px;color:var(--ink-4)"></i>';
   }
   closeModal('countryModal');
 }
@@ -2743,7 +2747,7 @@ function loadTeam(){
   const code = currentUser.referralCode||'—';
   
   // Update the invite link
-  const link = 'https://toyota-earn.app/?ref='+code;
+  const link = 'https://toyota-earn.onrender.com/?ref='+code;
   const inputEl = document.getElementById('refLinkInput');
   if(inputEl) inputEl.value = link;
 
