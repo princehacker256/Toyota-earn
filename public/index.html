@@ -529,7 +529,7 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .auth-remember{display:flex;align-items:center;gap:9px;cursor:pointer}
 .auth-remember input{width:17px;height:17px;accent-color:var(--brand)}
 .auth-remember span{font-size:12.5px;color:var(--ink-2);font-weight:600}
-.auth-forgot{font-size:12.5px;color:var(--brand);font-weight:800;text-decoration:none}
+.auth-forgot{font-size:12.5px;color:var(--brand);font-weight:800;text-decoration:none;cursor:pointer;}
 .auth-cta{width:100%;padding:16px;background:linear-gradient(135deg,#00d4a0,#00b389);color:#0a0e1a;border-radius:13px;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;gap:9px;font-family:'Space Grotesk',sans-serif;position:relative}
 .auth-cta:disabled{background:var(--surface-2);color:var(--ink-4);cursor:not-allowed}
 .auth-cta.loading{color:transparent;pointer-events:none}
@@ -1835,10 +1835,18 @@ function showAdminPrompt({title, message, placeholder, defaultValue, multiline, 
 function openSupportTelegram(){ 
   closeModal('forgotAlert'); 
   closeModal('suspensionAlert'); 
-  window.open('https://t.me/ToyotaEarnManager','_blank','noopener'); 
+  // Pre-filled message for password reset
+  const message = "Hello Support, I need help resetting my password.";
+  window.open('https://t.me/ToyotaEarnManager?text=' + encodeURIComponent(message), '_blank', 'noopener'); 
 }
-function openTelegramGroup(){ closeModal('giftModal'); window.open('https://t.me/ToyotaEarnManager','_blank','noopener'); }
-function openAnnouncementTelegram(){ closeModal('welcomeAnnouncementModal'); window.open('https://t.me/ToyotaEarnManager','_blank','noopener'); }
+function openTelegramGroup(){ 
+  closeModal('giftModal'); 
+  window.open('https://t.me/toyotaearn','_blank','noopener'); 
+}
+function openAnnouncementTelegram(){ 
+  closeModal('welcomeAnnouncementModal'); 
+  window.open('https://t.me/toyotaearn','_blank','noopener'); 
+}
 
 function showUssdToast(message){
   const toast = document.getElementById('ussdToast');
