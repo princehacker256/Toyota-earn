@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta name="theme-color" content="#0a0e1a" />
+<meta name="theme-color" content="#07111f" />
 <title>TOYOTA EARN</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -733,6 +733,107 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 .acli-btn.edit{background:linear-gradient(135deg,#0ea5e9,#0284c7)}
 .acli-btn.delete{background:linear-gradient(135deg,#f43f5e,#dc2626)}
 .acli-btn:active{transform:scale(.9);filter:brightness(1.15)}
+</style>
+
+<!-- TOYOTA EARN professional redesign layer: visual-only overrides preserve existing app logic -->
+<meta name="description" content="TOYOTA EARN dashboard for browsing vehicle plans, tracking account activity, and managing your account." />
+<style id="professional-redesign">
+:root{
+  --bg:#07111f;--bg-2:#0b1728;--surface:#101f32;--surface-2:#15263b;--surface-3:#1b3048;
+  --line:rgba(185,210,235,.10);--line-2:rgba(185,210,235,.18);
+  --ink:#f7fbff;--ink-2:#c0cddd;--ink-3:#8ea1b8;--ink-4:#637991;
+  --brand:#20d6a2;--brand-2:#10b98b;--brand-glow:rgba(32,214,162,.24);--brand-soft:rgba(32,214,162,.11);
+  --gold:#ffc857;--gold-soft:rgba(255,200,87,.12);--rose:#ff6680;--rose-soft:rgba(255,102,128,.12);
+  --sky:#55c8ff;--sky-soft:rgba(85,200,255,.12);--violet:#b7a2ff;--violet-soft:rgba(183,162,255,.12);
+  --r-sm:12px;--r-md:17px;--r-lg:22px;--r-xl:28px;
+  --sh-sm:0 4px 14px rgba(0,0,0,.14);--sh-md:0 12px 30px rgba(0,0,0,.20);--sh-lg:0 28px 70px rgba(0,0,0,.35)
+}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{background:radial-gradient(ellipse at 50% -12%,rgba(32,214,162,.09),transparent 38%),var(--bg);letter-spacing:-.01em}
+.app-container{max-width:520px;background:transparent;padding-bottom:112px;box-shadow:0 0 80px rgba(0,0,0,.12)}
+.app-header{padding:18px 20px 16px;background:rgba(7,17,31,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.brand-logo,.hw-avatar,.profile-avatar,.auth-hero-logo,.preloader-logo{background:linear-gradient(145deg,#31e4b1,#0ba77d);box-shadow:0 10px 26px rgba(32,214,162,.2)}
+.brand-text,.preloader-title,.auth-hero-brand,.hw-name,.section-head h2,.car-card .cc-name,.car-detail-card .cdc-name,.auth-card-head h1,.cashin-head h2{letter-spacing:-.045em}
+.page{padding-top:8px}
+.hero-welcome{background:linear-gradient(145deg,#142c40 0%,#0c1a2b 68%,#10243a 100%);border-color:var(--line-2);box-shadow:var(--sh-md);padding:25px 22px 23px}
+.hero-welcome::before{background:radial-gradient(circle,rgba(32,214,162,.17),transparent 68%)}
+.hw-balance-value{font-size:clamp(30px,8vw,40px);letter-spacing:-.06em}
+.stat-grid{gap:11px}
+.stat-tile,.form-card,.voucher-card,.referrals-table-card,.car-detail-card,.empty-state,.txn-item,.menu-item,.cashin-card{border-color:var(--line);box-shadow:var(--sh-sm)}
+.stat-tile{background:linear-gradient(155deg,rgba(19,37,57,.98),rgba(13,27,44,.98));padding:17px;border-radius:18px}
+.stat-tile .st-value{font-size:clamp(15px,4vw,19px);letter-spacing:-.04em}
+.quick-actions{gap:9px}
+.quick-action{border-radius:17px;background:linear-gradient(160deg,var(--surface),var(--bg-2));transition:transform .18s,border-color .18s,background .18s}
+.quick-action:active,.menu-item:active,.car-card:active{transform:scale(.985)}
+.quick-action .qa-icon{border-radius:14px}
+.car-card{border-radius:20px;background:linear-gradient(145deg,#12243a,#0e1c2e);box-shadow:var(--sh-sm);transition:transform .18s,border-color .18s}
+.car-card .cc-img{width:132px;min-height:170px}
+.car-card .cc-img img{transition:transform .35s ease}
+.car-card:hover .cc-img img{transform:scale(1.04)}
+.car-card .cc-body{padding:17px 15px}
+.car-card .cc-name{font-size:15px;line-height:1.35;padding-right:24px}
+.car-card .cc-row{gap:10px;font-size:12px}
+.car-card .cc-row .val{font-variant-numeric:tabular-nums}
+.btn-primary,.auth-cta{background:linear-gradient(120deg,#35e7b4,#16c797);color:#05251d;box-shadow:0 8px 20px rgba(32,214,162,.14)}
+.btn-primary:not(:disabled):hover,.auth-cta:not(:disabled):hover{filter:brightness(1.04);box-shadow:0 10px 26px rgba(32,214,162,.2)}
+.btn-secondary,.btn-soldout,.btn-comingsoon{border-radius:14px}
+.form-card,.voucher-card,.cashin-card{background:linear-gradient(155deg,#112238,#0d1b2d);border-radius:21px;padding:21px}
+.input-wrap,.auth-control,.auth-country,.cashin-input,.support-input-row input,.vc-row input{background:#091728;border-color:var(--line-2);border-radius:14px}
+.input-wrap:focus-within,.auth-control:focus-within{box-shadow:0 0 0 4px rgba(32,214,162,.10)}
+.input-wrap input,.auth-control input{font-size:15px}
+.quick-chip{background:#12243a;border-color:var(--line-2);transition:all .16s}
+.quick-chip:active,.tab-pill:active{transform:scale(.97)}
+.tab-pill{border-radius:999px;background:#102138;border-color:var(--line-2)}
+.tab-pill.active{background:var(--brand);color:#06251d}
+.txn-item{border-radius:16px;background:linear-gradient(135deg,#12243a,#0e1c2d)}
+.menu-item{border-radius:17px;background:linear-gradient(140deg,#12243a,#0e1c2d);padding:14px 15px}
+.menu-item .mi-icon{border-radius:13px}
+.bottom-nav{max-width:520px;background:rgba(9,22,37,.92);border-top:1px solid var(--line-2);box-shadow:0 -12px 32px rgba(0,0,0,.16);padding-top:12px;backdrop-filter:blur(22px)}
+.bottom-nav .nav-item{min-height:45px}
+.bottom-nav .nav-item i{font-size:18px}
+.bottom-nav .nav-item span{font-size:10px;letter-spacing:.01em}
+.auth-hero{padding:52px 24px 88px;background:radial-gradient(ellipse at top,#123047 0%,#07111f 72%)}
+.auth-card{background:var(--bg);border-top-color:var(--line-2);padding-top:30px}
+.auth-card-head p,.field-hint,.info-box .ib-text p{line-height:1.65}
+.auth-divider span{white-space:nowrap}
+.profile-card{background:linear-gradient(145deg,#173149,#0c1a2b);border-radius:22px}
+.team-invite-card{border-radius:22px;box-shadow:var(--sh-md)}
+.team-stats-grid{gap:7px}
+.team-stat-box{border-radius:16px;background:linear-gradient(145deg,#12243a,#0e1c2d)}
+.support-area{border-radius:20px;background:#091728}
+.support-input-row input{min-width:0}
+.overlay{backdrop-filter:blur(12px);background:rgba(2,8,16,.78)}
+.modal-box{border-radius:24px;box-shadow:var(--sh-lg)}
+.country-list{max-height:60vh;overflow-y:auto}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+img{max-width:100%}
+@media(min-width:600px){
+  body{padding:20px 0}
+  .app-container{border:1px solid var(--line);border-radius:28px;overflow:hidden;min-height:calc(100vh - 40px)}
+  .bottom-nav{bottom:20px;border:1px solid var(--line-2);border-radius:0 0 27px 27px}
+  .app-header{border-radius:26px 26px 0 0}
+}
+@media(max-width:360px){
+  .hero-welcome{margin-left:12px;margin-right:12px;padding:20px 17px}
+  .stat-grid,.quick-actions{margin-left:12px;margin-right:12px}
+  .car-card{margin-left:12px;margin-right:12px}
+  .car-card .cc-img{width:108px}
+  .car-card .cc-body{padding:13px 11px}
+  .car-card .cc-row{font-size:11px}
+  .quick-actions{gap:6px}
+  .quick-action{padding:12px 3px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+
+
+<style id="chat-image-lightbox-styles">
+.chat-img{cursor:zoom-in;transition:transform .15s ease}
+.chat-image-lightbox{position:fixed;inset:0;z-index:999999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.92);box-sizing:border-box;touch-action:none;overflow:hidden}
+.chat-image-lightbox.open{display:flex}
+.chat-image-lightbox img{display:block;max-width:100%;max-height:82vh;width:auto;height:auto;object-fit:contain;border-radius:8px;box-shadow:0 12px 45px rgba(0,0,0,.5);cursor:grab;transform:translate(0px,0px) scale(1);transform-origin:center center;touch-action:none;user-select:none;-webkit-user-drag:none;will-change:transform}
+.chat-image-lightbox-close{position:absolute;top:calc(12px + env(safe-area-inset-top));right:14px;width:46px;height:46px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:30px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.chat-image-lightbox-hint{position:absolute;bottom:calc(14px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:rgba(255,255,255,.8);font-size:13px;pointer-events:none}.chat-image-zoom-controls{position:absolute;top:calc(68px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center;background:rgba(35,35,35,.92);padding:7px;border:1px solid rgba(255,255,255,.16);border-radius:30px}.chat-image-zoom-controls button{width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.13);color:#fff;font-size:25px;font-weight:700;display:flex;align-items:center;justify-content:center}.chat-image-zoom-controls span{color:#fff;min-width:48px;text-align:center;font-size:13px}
 </style>
 </head>
 <body>
@@ -1656,6 +1757,9 @@ let currentCat = 'all';
 let currentAdminTab = 'users';
 let heroIndex = 0, heroTimer = null, autoClaimTimer = null;
 let syncTimer = null, syncing = false;
+// Keep newly-created support images in memory until the cloud confirms them.
+// This prevents the 15-second refresh from erasing an image when local storage is full.
+const pendingSupportMessages = new Map();
 let confirmCallback = null;
 let ussdToastTimer = null;
 let adminCurrentThread = null;
@@ -1756,6 +1860,9 @@ async function cloudLoad(){
 
     const myPhone = currentUser ? normPhone(currentUser.phone) : null;
     const mySnapshot = currentUser ? JSON.parse(JSON.stringify(currentUser)) : null;
+    // Keep locally saved support images/messages if the cloud snapshot is stale or too large to save.
+    // Also merge the in-memory queue because localStorage can reject large image data.
+    const localSupportSnapshot = storageLoad('supportMessages', []);
 
     STORAGE_KEYS.forEach(k=>{ 
       if (k === 'announcement') { STATE[k] = data[k] || DEFAULT_ANNOUNCEMENT; } 
@@ -1765,6 +1872,27 @@ async function cloudLoad(){
     
     STATE.carStatusOverrides = (data.carStatusOverrides && typeof data.carStatusOverrides === 'object' && !Array.isArray(data.carStatusOverrides)) ? data.carStatusOverrides : {};
     CUSTOM_CARS = Array.isArray(data.customCars) ? data.customCars : [];
+
+    // The page refreshes cloud data periodically. Never let an older cloud snapshot
+    // remove a support image that has not yet appeared in the cloud.
+    const cloudIds = new Set(STATE.supportMessages.map(m => m && m.id).filter(Boolean));
+    const confirmedCloudIds = new Set(cloudIds);
+    const mergeMissing = (items, imagesOnly) => {
+      if (!Array.isArray(items)) return;
+      items.forEach(m => {
+        if (!m || !m.id || cloudIds.has(m.id) || (imagesOnly && !m.image)) return;
+        STATE.supportMessages.push(m);
+        cloudIds.add(m.id);
+      });
+    };
+    // Preserve ALL local support messages (text and images) when the cloud snapshot
+    // is older or a recent write has not propagated yet. Previously this merged only
+    // images, so new text messages vanished on the next periodic cloud refresh.
+    mergeMissing(localSupportSnapshot, false);
+    mergeMissing(Array.from(pendingSupportMessages.values()), false);
+    // Only drop queued messages when the ID was present in the server response itself.
+    confirmedCloudIds.forEach(id => pendingSupportMessages.delete(id));
+    STATE.supportMessages.sort((a,b) => new Date(a.timestamp || 0) - new Date(b.timestamp || 0));
 
     if(myPhone){
       const fresh = STATE.users.find(u => normPhone(u.phone) === myPhone);
@@ -3179,7 +3307,7 @@ function loadSupport(){
     
     let content = '';
     if(m.image) {
-      content += '<img src="' + m.image + '" class="chat-img" onclick="window.open(this.src)">';
+      content += '<img src="' + m.image + '" class="chat-img" onclick="openChatImage(this.src)">';
     }
     if(m.content) {
       content += '<div class="chat-content">' + esc(m.content) + '</div>';
@@ -3195,28 +3323,96 @@ async function sendSupport(){
   const i = document.getElementById('supportInput');
   const c = i.value.trim();
   if(!c) return;
-  STATE.supportMessages.push({ id:genId('sup'), phone:u.phone, sender:'user', content:c, timestamp:new Date().toISOString(), isRead:false, readByAdmin:false });
-  debouncedSave();
+  const message = { id:genId('sup'), phone:u.phone, sender:'user', content:c, timestamp:new Date().toISOString(), isRead:false, readByAdmin:false };
+  STATE.supportMessages.push(message);
+  pendingSupportMessages.set(message.id, message);
+  saveStateLocal();
   i.value='';
   loadSupport();
-  showToast('Message sent to admin','success');
+  showToast('Message sent; syncing…','info');
+  const synced = await cloudSync();
+  if (synced) {
+    setTimeout(async () => {
+      await cloudLoad();
+      if (STATE.supportMessages.some(m => m && m.id === message.id)) {
+        pendingSupportMessages.delete(message.id);
+        if (document.getElementById('supportPage')?.classList.contains('active')) loadSupport();
+        showToast('Message saved successfully','success');
+      } else {
+        pendingSupportMessages.set(message.id, message);
+        showToast('Message is still waiting for cloud confirmation','error');
+      }
+    }, 1200);
+  } else {
+    showToast('Message kept locally, but cloud sync failed','error');
+  }
 }
-function handleSupportImage(input) {
-  const file = input.files[0];
+async function compressSupportImage(file) {
+  // Smaller images are more reliable to save and sync, especially on mobile data.
+  const maxSide = 720;
+  const quality = 0.52;
+  let bitmap;
+  try {
+    if ('createImageBitmap' in window) bitmap = await createImageBitmap(file);
+  } catch (_) {}
+  if (!bitmap) {
+    bitmap = await new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Could not read this image.')); };
+      img.src = url;
+    });
+  }
+  const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+  canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  if (bitmap.close) bitmap.close();
+  return canvas.toDataURL('image/jpeg', quality);
+}
+async function handleSupportImage(input) {
+  const file = input.files && input.files[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const imgData = e.target.result;
-    const u = currentUser;
-    if (!u) return;
-    
-    STATE.supportMessages.push({ id:genId('sup'), phone:u.phone, sender:'user', image:imgData, content:'', timestamp:new Date().toISOString(), isRead:false, readByAdmin:false });
-    debouncedSave();
+  const u = currentUser;
+  if (!u) { showToast('Please log in before sending an image','error'); input.value=''; return; }
+  if (!file.type || !file.type.startsWith('image/')) { showToast('Choose an image file','error'); input.value=''; return; }
+  if (file.size > 15 * 1024 * 1024) { showToast('Choose an image smaller than 15 MB','error'); input.value=''; return; }
+  showToast('Preparing image…','info');
+  try {
+    const imgData = await compressSupportImage(file);
+    const message = { id:genId('sup'), phone:u.phone, sender:'user', image:imgData, content:'', timestamp:new Date().toISOString(), isRead:false, readByAdmin:false };
+    STATE.supportMessages.push(message);
+    pendingSupportMessages.set(message.id, message);
+    saveStateLocal(); // Best-effort local save; in-memory queue covers storage quota errors.
     loadSupport();
-    showToast('Image sent','success');
-  };
-  reader.readAsDataURL(file);
-  input.value = '';
+    input.value = '';
+    const synced = await cloudSync();
+    if (synced) {
+      // Confirm this ID on the next cloud read before removing it from the pending queue.
+      showToast('Image uploaded; checking that it is saved…','info');
+      setTimeout(async () => {
+        await cloudLoad();
+        if (STATE.supportMessages.some(m => m && m.id === message.id)) {
+          pendingSupportMessages.delete(message.id);
+          if (document.getElementById('supportPage').classList.contains('active')) loadSupport();
+          showToast('Image saved successfully','success');
+        } else {
+          pendingSupportMessages.set(message.id, message);
+          showToast('Image is still waiting for cloud confirmation','error');
+        }
+      }, 1200);
+    } else {
+      showToast('Image kept in this chat, but cloud sync failed; admin may not see it yet','error');
+    }
+  } catch (err) {
+    console.error('Support image upload failed:', err);
+    showToast('Could not process image. Please try a smaller image.','error');
+  } finally {
+    input.value = '';
+  }
 }
 
 /* ============ ADMIN ============ */
@@ -3413,7 +3609,7 @@ function renderAdminThread(){
     
     let content = '';
     if(m.image) {
-      content += '<img src="' + m.image + '" class="chat-img" onclick="window.open(this.src)">';
+      content += '<img src="' + m.image + '" class="chat-img" onclick="openChatImage(this.src)">';
     }
     if(m.content) {
       content += '<div class="chat-content">' + esc(m.content) + '</div>';
@@ -3428,26 +3624,66 @@ async function adminSendReply(){
   const input = document.getElementById('adminReplyInput');
   const c = input.value.trim();
   if(!c) return;
-  STATE.supportMessages.push({ id:genId('sup'), phone:adminCurrentThread, sender:'admin', content:c, timestamp:new Date().toISOString(), isRead:false, readByUser:false });
-  debouncedSave();
+  const message = { id:genId('sup'), phone:adminCurrentThread, sender:'admin', content:c, timestamp:new Date().toISOString(), isRead:false, readByUser:false };
+  STATE.supportMessages.push(message);
+  pendingSupportMessages.set(message.id, message);
+  saveStateLocal();
   input.value='';
   renderAdminThread();
-  showToast('Reply sent','success');
+  showToast('Reply sent; syncing…','info');
+  const synced = await cloudSync();
+  if (synced) {
+    setTimeout(async () => {
+      await cloudLoad();
+      if (STATE.supportMessages.some(m => m && m.id === message.id)) {
+        pendingSupportMessages.delete(message.id);
+        if (adminCurrentThread) renderAdminThread();
+        showToast('Reply saved successfully','success');
+      } else {
+        pendingSupportMessages.set(message.id, message);
+        showToast('Reply is still waiting for cloud confirmation','error');
+      }
+    }, 1200);
+  } else {
+    showToast('Reply kept locally, but cloud sync failed','error');
+  }
 }
-function handleAdminImage(input) {
+async function handleAdminImage(input) {
   if (!adminCurrentThread) return;
-  const file = input.files[0];
+  const file = input.files && input.files[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const imgData = e.target.result;
-    STATE.supportMessages.push({ id:genId('sup'), phone:adminCurrentThread, sender:'admin', image:imgData, content:'', timestamp:new Date().toISOString(), isRead:false, readByUser:false });
-    debouncedSave();
+  if (!file.type || !file.type.startsWith('image/')) { showToast('Choose an image file','error'); input.value=''; return; }
+  if (file.size > 15 * 1024 * 1024) { showToast('Choose an image smaller than 15 MB','error'); input.value=''; return; }
+  showToast('Preparing image…','info');
+  try {
+    const imgData = await compressSupportImage(file);
+    const message = { id:genId('sup'), phone:adminCurrentThread, sender:'admin', image:imgData, content:'', timestamp:new Date().toISOString(), isRead:false, readByUser:false };
+    STATE.supportMessages.push(message);
+    pendingSupportMessages.set(message.id, message);
+    saveStateLocal();
     renderAdminThread();
-    showToast('Image sent','success');
-  };
-  reader.readAsDataURL(file);
-  input.value = '';
+    const synced = await cloudSync();
+    if (synced) {
+      setTimeout(async () => {
+        await cloudLoad();
+        if (STATE.supportMessages.some(m => m && m.id === message.id)) {
+          pendingSupportMessages.delete(message.id);
+          if (adminCurrentThread) renderAdminThread();
+          showToast('Image saved successfully','success');
+        } else {
+          pendingSupportMessages.set(message.id, message);
+          showToast('Image is still waiting for cloud confirmation','error');
+        }
+      }, 1200);
+    } else {
+      showToast('Image kept locally, but cloud sync failed','error');
+    }
+  } catch (err) {
+    console.error('Admin support image failed:', err);
+    showToast('Could not process image. Please try a smaller image.','error');
+  } finally {
+    input.value = '';
+  }
 }
 function adminDeleteSupportMsg(id){
   showConfirm({ title:'Delete Message', message:'Delete this message permanently?', icon:'trash', confirmText:'Delete', onConfirm:()=>{
@@ -4109,6 +4345,37 @@ window.addEventListener('beforeunload',()=>saveStateLocal());
       e.preventDefault();
     }
   }, true);
+})();
+</script>
+
+<script id="chat-image-lightbox-script">
+(function(){
+  var scale=1, tx=0, ty=0, pointers=new Map(), startDist=0, startScale=1, startX=0, startY=0, startTx=0, startTy=0, lastTap=0;
+  function ensureChatImageLightbox(){
+    var box=document.getElementById('chatImageLightbox'); if(box) return box;
+    box=document.createElement('div'); box.id='chatImageLightbox'; box.className='chat-image-lightbox'; box.setAttribute('role','dialog'); box.setAttribute('aria-modal','true'); box.setAttribute('aria-label','Image preview');
+    box.innerHTML='<button type="button" class="chat-image-lightbox-close" aria-label="Close image preview">&times;</button><div class="chat-image-zoom-controls"><button type="button" data-zoom="out" aria-label="Zoom out">−</button><span id="chatImageZoomLevel">100%</span><button type="button" data-zoom="in" aria-label="Zoom in">+</button><button type="button" data-zoom="reset" aria-label="Reset zoom">↺</button></div><img alt="Expanded chat image" draggable="false"><div class="chat-image-lightbox-hint">Pinch, double-tap or use + / − to zoom; drag to move</div>';
+    document.body.appendChild(box);
+    box.addEventListener('click',function(e){if(e.target===box || e.target.classList.contains('chat-image-lightbox-close')) window.closeChatImage();});
+    box.querySelector('[data-zoom="in"]').addEventListener('click',function(e){e.stopPropagation();setScale(scale+0.5);});
+    box.querySelector('[data-zoom="out"]').addEventListener('click',function(e){e.stopPropagation();setScale(scale-0.5);});
+    box.querySelector('[data-zoom="reset"]').addEventListener('click',function(e){e.stopPropagation();resetZoom();});
+    var img=box.querySelector('img');
+    img.addEventListener('pointerdown',function(e){e.preventDefault();img.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pointers.size===1){startX=e.clientX;startY=e.clientY;startTx=tx;startTy=ty;}else if(pointers.size===2){var pts=Array.from(pointers.values());startDist=distance(pts[0],pts[1]);startScale=scale;}});
+    img.addEventListener('pointermove',function(e){if(!pointers.has(e.pointerId))return;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pointers.size===2){var pts=Array.from(pointers.values());if(startDist>0)setScale(startScale*distance(pts[0],pts[1])/startDist,false);}else if(pointers.size===1&&scale>1){tx=startTx+(e.clientX-startX);ty=startTy+(e.clientY-startY);applyTransform();}});
+    function endPointer(e){pointers.delete(e.pointerId);if(pointers.size<2)startDist=0;if(pointers.size===1){var p=Array.from(pointers.values())[0];startX=p.x;startY=p.y;startTx=tx;startTy=ty;}}
+    img.addEventListener('pointerup',endPointer);img.addEventListener('pointercancel',endPointer);
+    img.addEventListener('click',function(e){e.stopPropagation();var now=Date.now();if(now-lastTap<320){setScale(scale>1?1:2);lastTap=0;}else lastTap=now;});
+    box.addEventListener('wheel',function(e){if(!box.classList.contains('open'))return;e.preventDefault();setScale(scale+(e.deltaY<0?0.25:-0.25));},{passive:false});
+    return box;
+  }
+  function distance(a,b){var dx=a.x-b.x,dy=a.y-b.y;return Math.sqrt(dx*dx+dy*dy);}
+  function setScale(v,keepPosition){scale=Math.max(1,Math.min(5,v));if(scale===1){tx=0;ty=0;}else if(keepPosition===false){/* keep current position while pinching */}applyTransform();}
+  function resetZoom(){scale=1;tx=0;ty=0;applyTransform();}
+  function applyTransform(){var box=document.getElementById('chatImageLightbox');if(!box)return;var img=box.querySelector('img');img.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')';img.style.cursor=scale>1?'grab':'zoom-in';var label=box.querySelector('#chatImageZoomLevel');if(label)label.textContent=Math.round(scale*100)+'%';}
+  window.openChatImage=function(src){if(!src)return;var box=ensureChatImageLightbox();var img=box.querySelector('img');img.src=src;resetZoom();box.classList.add('open');document.body.style.overflow='hidden';var close=box.querySelector('.chat-image-lightbox-close');if(close)close.focus();};
+  window.closeChatImage=function(){var box=document.getElementById('chatImageLightbox');if(!box)return;box.classList.remove('open');document.body.style.overflow='';var img=box.querySelector('img');if(img)img.removeAttribute('src');pointers.clear();resetZoom();};
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')window.closeChatImage();if(e.key==='+'||e.key==='=')setScale(scale+0.25);if(e.key==='-')setScale(scale-0.25);});
 })();
 </script>
 </body>
