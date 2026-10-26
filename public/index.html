@@ -8,6 +8,29 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- FIREBASE INTEGRATION -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCy4wWAJU2FvkUTAIUwwJbiVal6ZMV6psM",
+    authDomain: "toyota-earn-f27fc.firebaseapp.com",
+    projectId: "toyota-earn-f27fc",
+    storageBucket: "toyota-earn-f27fc.firebasestorage.app",
+    messagingSenderId: "476246666284",
+    appId: "1:476246666284:web:f297ef0ab0675ea2607589",
+    measurementId: "G-N03448EM2Z"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const docRef = doc(db, "appData", "globalState");
+
+  window.firebaseDB = { docRef, getDoc, setDoc, onSnapshot };
+</script>
+
 <style>
 :root{
   --bg:#0a0e1a; --bg-2:#0d1220; --surface:#111826; --surface-2:#161e2e; --surface-3:#1c2538;
@@ -29,7 +52,6 @@ html,body{background:var(--bg)}
 body{font-family:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .app-container{max-width:480px;margin:0 auto;background:var(--bg);min-height:100vh;position:relative;padding-bottom:100px}
 
-/* ═══════════════ INSTANT TAP ═══════════════ */
 button, a, [onclick], input, select, textarea, .menu-item, .quick-action,
 .country-item, .nav-item, .tab-pill, .quick-chip, .hero-dot, .admin-tab,
 .admin-quick, .admin-chip, .au-btn, .acli-btn, .chat-delete-btn, .cc-fav, .ut-btn{
@@ -87,164 +109,50 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .page.active{display:block}
 @keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* ═══════════════ AUTH (DARK · APP THEME) ═══════════════ */
-.ut-auth-page{
-  position:relative;min-height:100vh;display:flex;flex-direction:column;
-  padding:0 20px 36px;
-  background:
-    radial-gradient(ellipse 620px 420px at 12% -8%,rgba(0,212,160,.12),transparent 62%),
-    radial-gradient(ellipse 520px 380px at 105% 12%,rgba(99,102,241,.10),transparent 60%),
-    var(--bg);
-}
-.ut-auth-page::before{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
-  background-size:44px 44px;
-  -webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 0%,#000 25%,transparent 78%);
-  mask-image:radial-gradient(ellipse 70% 55% at 50% 0%,#000 25%,transparent 78%);
-}
-.ut-auth-shell{
-  position:relative;z-index:1;width:100%;max-width:420px;margin:0 auto;flex:1;
-  display:flex;flex-direction:column;justify-content:center;
-  padding-top:10px;
-}
+/* AUTH */
+.ut-auth-page{position:relative;min-height:100vh;display:flex;flex-direction:column;padding:0 20px 36px;background:radial-gradient(ellipse 620px 420px at 12% -8%,rgba(0,212,160,.12),transparent 62%),radial-gradient(ellipse 520px 380px at 105% 12%,rgba(99,102,241,.10),transparent 60%),var(--bg);}
+.ut-auth-page::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 0%,#000 25%,transparent 78%);mask-image:radial-gradient(ellipse 70% 55% at 50% 0%,#000 25%,transparent 78%);}
+.ut-auth-shell{position:relative;z-index:1;width:100%;max-width:420px;margin:0 auto;flex:1;display:flex;flex-direction:column;justify-content:center;padding-top:10px;}
 .ut-auth-header{text-align:center;padding:34px 0 24px}
-.ut-logo-mark{
-  width:66px;height:66px;margin:0 auto 16px;border-radius:20px;
-  background:linear-gradient(135deg,#00d4a0,#00b389);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:800;color:#fff;
-  box-shadow:0 18px 40px -12px rgba(0,212,160,.65),inset 0 1px 0 rgba(255,255,255,.35);
-}
-.ut-brand{
-  font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:800;
-  letter-spacing:2.6px;color:#fff;margin-bottom:24px;
-}
-.ut-brand span{
-  background:linear-gradient(135deg,#00d4a0,#38bdf8);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-}
-.ut-auth-title{
-  font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:800;
-  letter-spacing:-.7px;color:#fff;margin-bottom:8px;
-}
-.ut-auth-sub{
-  font-size:13px;font-weight:500;color:var(--ink-3);line-height:1.55;
-  max-width:290px;margin:0 auto;
-}
-.ut-card{
-  background:linear-gradient(180deg,#131b28 0%,#0f1622 100%);
-  border:1px solid var(--line-2);border-radius:22px;padding:24px 20px 22px;
-  box-shadow:0 28px 56px -24px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.045);
-}
+.ut-logo-mark{width:66px;height:66px;margin:0 auto 16px;border-radius:20px;background:linear-gradient(135deg,#00d4a0,#00b389);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:800;color:#fff;box-shadow:0 18px 40px -12px rgba(0,212,160,.65),inset 0 1px 0 rgba(255,255,255,.35);}
+.ut-brand{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:800;letter-spacing:2.6px;color:#fff;margin-bottom:24px;}
+.ut-brand span{background:linear-gradient(135deg,#00d4a0,#38bdf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.ut-auth-title{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.7px;color:#fff;margin-bottom:8px;}
+.ut-auth-sub{font-size:13px;font-weight:500;color:var(--ink-3);line-height:1.55;max-width:290px;margin:0 auto;}
+.ut-card{background:linear-gradient(180deg,#131b28 0%,#0f1622 100%);border:1px solid var(--line-2);border-radius:22px;padding:24px 20px 22px;box-shadow:0 28px 56px -24px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.045);}
 .ut-form-group{margin-bottom:17px}
-.ut-label{
-  display:block;font-size:10.5px;font-weight:800;color:var(--ink-2);
-  letter-spacing:.7px;text-transform:uppercase;margin-bottom:8px;
-}
+.ut-label{display:block;font-size:10.5px;font-weight:800;color:var(--ink-2);letter-spacing:.7px;text-transform:uppercase;margin-bottom:8px;}
 .ut-input-wrap,.ut-pw-wrap{position:relative}
-.ut-input,.ut-select{
-  width:100%;padding:15px 16px;background:var(--bg-2);
-  border:1.5px solid var(--line);border-radius:13px;
-  font-size:16px;font-weight:600;color:#fff;outline:none;
-  font-family:'Manrope',sans-serif;
-  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
-  -webkit-appearance:none;appearance:none;
-}
+.ut-input,.ut-select{width:100%;padding:15px 16px;background:var(--bg-2);border:1.5px solid var(--line);border-radius:13px;font-size:16px;font-weight:600;color:#fff;outline:none;font-family:'Manrope',sans-serif;transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;-webkit-appearance:none;appearance:none;}
 .ut-input::placeholder{color:var(--ink-4);font-weight:500}
-.ut-input:focus,.ut-select:focus{
-  border-color:var(--brand);background:#0a1220;
-  box-shadow:0 0 0 4px var(--brand-soft);
-}
+.ut-input:focus,.ut-select:focus{border-color:var(--brand);background:#0a1220;box-shadow:0 0 0 4px var(--brand-soft);}
 .ut-input.has-icon{padding-left:46px}
-.ut-input-icon{
-  position:absolute;left:16px;top:50%;transform:translateY(-50%);
-  font-size:14px;color:var(--ink-4);pointer-events:none;
-  transition:color .18s ease;
-}
-.ut-input-wrap:focus-within .ut-input-icon,
-.ut-pw-wrap:focus-within .ut-input-icon{color:var(--brand)}
+.ut-input-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--ink-4);pointer-events:none;transition:color .18s ease;}
+.ut-input-wrap:focus-within .ut-input-icon,.ut-pw-wrap:focus-within .ut-input-icon{color:var(--brand)}
 .ut-pw-wrap .ut-input{padding-right:50px}
-.ut-eye{
-  position:absolute;right:6px;top:50%;transform:translateY(-50%);
-  width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
-  color:var(--ink-3);font-size:14px;background:transparent;border:none;cursor:pointer;
-  transition:color .15s ease,background .15s ease;
-}
+.ut-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-size:14px;background:transparent;border:none;cursor:pointer;transition:color .15s ease,background .15s ease;}
 .ut-eye:hover,.ut-eye:active{color:var(--brand);background:var(--brand-soft)}
-.ut-select{
-  background-image:url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8599' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 16px center;
-  padding-right:44px;cursor:pointer;
-}
+.ut-select{background-image:url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8599' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:44px;cursor:pointer;}
 .ut-select option{background:#111826;color:#fff}
 .ut-hint{font-size:11.5px;font-weight:700;margin-top:8px;min-height:15px;display:flex;align-items:center;gap:6px}
-
-/* Password strength */
 .pw-strength{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:10px}
 .pw-strength-bar{height:4px;border-radius:4px;background:#1c2538;transition:background .25s ease}
-.pw-strength-text{
-  display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;
-  margin-top:8px;color:var(--ink-3);
-}
+.pw-strength-text{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;margin-top:8px;color:var(--ink-3);}
 .pw-strength-text i{font-size:10px}
-.pw-reqs{
-  background:var(--bg-2);border:1px solid var(--line);
-  border-radius:12px;padding:12px;margin-top:10px;
-}
-.pw-reqs-title{
-  font-size:9.5px;font-weight:800;color:var(--ink-4);
-  letter-spacing:.7px;text-transform:uppercase;margin-bottom:8px;
-}
-.pw-req{
-  font-size:11px;font-weight:600;color:var(--ink-3);
-  display:flex;align-items:center;gap:7px;padding:2px 0;
-}
-.pw-req i{font-size:6px;color:var(--ink-4)}
-
-/* Primary button */
-.ut-btn{
-  width:100%;padding:16px;border-radius:14px;border:none;cursor:pointer;
-  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;
-  letter-spacing:-.2px;color:#0a0e1a;margin-top:6px;
-  background:linear-gradient(135deg,#00d4a0 0%,#00b389 60%,#009e78 100%);
-  box-shadow:0 14px 30px -10px rgba(0,212,160,.55),inset 0 1px 0 rgba(255,255,255,.35);
-  transition:transform .08s ease,box-shadow .18s ease,filter .18s ease;
-}
+.ut-btn{width:100%;padding:16px;border-radius:14px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;letter-spacing:-.2px;color:#0a0e1a;margin-top:6px;background:linear-gradient(135deg,#00d4a0 0%,#00b389 60%,#009e78 100%);box-shadow:0 14px 30px -10px rgba(0,212,160,.55),inset 0 1px 0 rgba(255,255,255,.35);transition:transform .08s ease,box-shadow .18s ease,filter .18s ease;}
 .ut-btn:active{transform:scale(.98);box-shadow:0 8px 18px -8px rgba(0,212,160,.5),inset 0 1px 0 rgba(255,255,255,.35)}
 .ut-btn:disabled{background:#1c2538;color:var(--ink-4);box-shadow:none;cursor:not-allowed}
-.ut-btn.loading{
-  color:transparent;pointer-events:none;position:relative;
-  background:linear-gradient(135deg,#00d4a0 0%,#00b389 60%,#009e78 100%);
-  box-shadow:0 14px 30px -10px rgba(0,212,160,.55),inset 0 1px 0 rgba(255,255,255,.35);
-}
-.ut-btn.loading::after{
-  content:'';position:absolute;width:18px;height:18px;top:50%;left:50%;
-  margin:-9px 0 0 -9px;border:2px solid rgba(10,14,26,.3);
-  border-top-color:#0a0e1a;border-radius:50%;animation:spin .7s linear infinite;
-}
-
-/* Alerts */
-.ut-error-msg,.ut-success-msg{
-  display:none;font-size:12.5px;font-weight:700;margin-top:12px;
-  padding:11px 13px;border-radius:11px;text-align:center;line-height:1.45;
-}
+.ut-btn.loading{color:transparent;pointer-events:none;position:relative;background:linear-gradient(135deg,#00d4a0 0%,#00b389 60%,#009e78 100%);box-shadow:0 14px 30px -10px rgba(0,212,160,.55),inset 0 1px 0 rgba(255,255,255,.35);}
+.ut-btn.loading::after{content:'';position:absolute;width:18px;height:18px;top:50%;left:50%;margin:-9px 0 0 -9px;border:2px solid rgba(10,14,26,.3);border-top-color:#0a0e1a;border-radius:50%;animation:spin .7s linear infinite;}
+.ut-error-msg,.ut-success-msg{display:none;font-size:12.5px;font-weight:700;margin-top:12px;padding:11px 13px;border-radius:11px;text-align:center;line-height:1.45;}
 .ut-error-msg{color:#fda4af;background:rgba(244,63,94,.10);border:1px solid rgba(244,63,94,.25)}
 .ut-success-msg{color:var(--brand);background:rgba(0,212,160,.10);border:1px solid rgba(0,212,160,.25)}
-
-/* Footer */
 .ut-footer{text-align:center;margin-top:22px;font-size:13.5px;color:var(--ink-3);font-weight:600}
 .ut-footer span{color:var(--brand);font-weight:800;cursor:pointer}
-.ut-footer span:active{opacity:.7}
-.ut-secure{
-  display:flex;align-items:center;justify-content:center;gap:7px;
-  margin-top:24px;font-size:10.5px;font-weight:700;color:var(--ink-4);letter-spacing:.4px;
-}
+.ut-secure{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:24px;font-size:10.5px;font-weight:700;color:var(--ink-4);letter-spacing:.4px;}
 .ut-secure i{color:var(--brand);font-size:11px}
 
-/* ═══════════════ APP THEME (DARK) ═══════════════ */
+/* APP */
 .hero-welcome{margin:0 16px 20px;border-radius:var(--r-xl);padding:24px 22px 22px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1a2338 0%,#0f1625 100%);border:1px solid var(--line-2);box-shadow:var(--sh-md)}
 .hero-welcome::before{content:'';position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,160,.18),transparent 65%);top:-140px;right:-100px;pointer-events:none}
 .hero-welcome::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.15),transparent 65%);bottom:-100px;left:-60px;pointer-events:none}
@@ -294,16 +202,6 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .section-head h2{font-size:16px;font-weight:800;color:#fff;font-family:'Space Grotesk',sans-serif}
 .section-head .more{font-size:12px;font-weight:700;color:var(--brand);cursor:pointer}
 
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 16px 20px}
-.stat-tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:16px}
-.stat-tile .st-icon{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:14px;margin-bottom:12px}
-.stat-tile .st-icon.mint{background:var(--brand-soft);color:var(--brand)}
-.stat-tile .st-icon.sky{background:var(--sky-soft);color:var(--sky)}
-.stat-tile .st-icon.violet{background:var(--violet-soft);color:var(--violet)}
-.stat-tile .st-icon.gold{background:var(--gold-soft);color:var(--gold)}
-.stat-tile .st-label{font-size:10.5px;font-weight:700;color:var(--ink-3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px}
-.stat-tile .st-value{font-size:17px;font-weight:800;color:#fff;font-family:'Space Grotesk',sans-serif}
-
 .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 16px 22px}
 .quick-action{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 6px 14px;text-align:center;cursor:pointer}
 .quick-action .qa-icon{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:16px;margin:0 auto 9px}
@@ -328,8 +226,6 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .car-card .cc-row .lbl{color:var(--ink-3);font-weight:600}
 .car-card .cc-row .val{color:#fff;font-weight:800;font-family:'Space Grotesk',sans-serif}
 .car-card .cc-row .val.gold{color:var(--brand)}
-.car-card .cc-fav{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;z-index:3;border:1px solid rgba(255,255,255,.15)}
-.car-card .cc-fav.active{color:var(--rose);background:rgba(244,63,94,.2);border-color:rgba(244,63,94,.4)}
 .car-card .almost-warning{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(245,158,11,.06));border:1px solid rgba(245,158,11,.35);border-radius:10px;padding:9px 12px;margin-top:10px;font-size:11px;font-weight:800;color:#fbbf24;letter-spacing:.3px}
 .car-card .almost-warning i{font-size:12px;flex-shrink:0}
 
@@ -337,7 +233,6 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .btn-primary.loading{color:transparent;pointer-events:none}
 .btn-primary.loading::after{content:'';position:absolute;width:18px;height:18px;border:2px solid rgba(10,14,26,.3);border-top-color:#0a0e1a;border-radius:50%;animation:spin .7s linear infinite;top:50%;left:50%;transform:translate(-50%,-50%)}
 @keyframes spin{to{transform:rotate(360deg)}}
-.btn-secondary{width:100%;padding:13px;background:var(--surface);color:#fff;border:1px solid var(--line-2);border-radius:13px;font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-soldout{width:100%;padding:11px;background:var(--surface-2);color:var(--ink-3);border:1px solid var(--line);border-radius:13px;font-weight:800;font-size:12.5px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:not-allowed;margin-top:12px}
 .btn-comingsoon{width:100%;padding:11px;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(99,102,241,.08));color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:13px;font-weight:800;font-size:12.5px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:not-allowed;margin-top:12px}
 
@@ -411,7 +306,6 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .menu-item .mi-badge{background:var(--rose);color:#fff;font-size:10.5px;font-weight:800;min-width:22px;height:22px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 7px;margin-left:auto;margin-right:8px;box-shadow:0 0 0 3px rgba(244,63,94,.15);font-family:'Space Grotesk',sans-serif;animation:badgePop .35s cubic-bezier(.34,1.56,.64,1)}
 .btn-signout{width:calc(100% - 32px);margin:0 16px 20px;padding:15px;background:var(--rose-soft);color:var(--rose);border:1px solid rgba(244,63,94,.25);border-radius:13px;font-weight:800;font-size:13.5px}
 
-/* ═══════════════ TEAM PAGE ═══════════════ */
 .team-invite-card {margin: 0 16px 20px; background: linear-gradient(135deg, #4c1d95 0%, #831843 100%); border-radius: var(--r-xl); padding: 24px; color: #fff; position: relative; overflow: hidden; box-shadow: var(--sh-md);}
 .team-invite-title {font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;}
 .team-invite-desc {font-size: 13.5px; line-height: 1.5; margin-bottom: 22px; opacity: 0.9;}
@@ -509,7 +403,6 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .country-item.selected .ci-radio{border-color:var(--brand)}
 .country-item.selected .ci-radio::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--brand)}
 
-/* ═══════════════ BOTTOM NAV ═══════════════ */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;max-width:480px;margin:0 auto;background:rgba(17,24,38,.92);backdrop-filter:blur(20px);border-top:1px solid var(--line-2);padding:10px 8px calc(14px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-around}
 .bottom-nav .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px 0;color:var(--ink-4);background:none;border:none;position:relative}
 .bottom-nav .nav-item i{font-size:19px}
@@ -580,7 +473,6 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 #snackbar.show{visibility:visible;animation:snack 3s ease}
 @keyframes snack{0%{opacity:0;transform:translate(-50%,20px)}10%,90%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,20px)}}
 
-/* ═══════════════ ADMIN PANEL ═══════════════ */
 .admin-page{background:radial-gradient(ellipse 800px 600px at 10% -10%,rgba(0,212,160,.09),transparent 55%),radial-gradient(ellipse 800px 600px at 100% 0%,rgba(99,102,241,.07),transparent 55%),var(--bg);min-height:100vh;padding:22px 16px 80px}
 .admin-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--line)}
 .admin-header-left{display:flex;flex-direction:column;gap:11px;min-width:0}
@@ -1508,11 +1400,6 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 'use strict';
 
 const CONFIG = Object.freeze({
-  JSONBIN: {
-    binId: '6ab022ceac6210605ae35e28',
-    accessKey: '$2a$10$s0H5i58BjWKGcKnZsyr/w.4BOCAKe3dNw1GJ74uwpf5VDQZrwUUr.',
-    baseUrl: 'https://api.jsonbin.io/v3/b'
-  },
   WITHDRAW_FEE_PCT: 10,
   MIN_WITHDRAW: { UGX:5000, KES:200, RWF:2000, CDF:5000 },
   MIN_DEPOSIT: { UGX:15000, KES:400, RWF:4000, CDF:10000 },
@@ -1684,64 +1571,106 @@ function applyCustomCode() {
   }
 }
 
+// FIREBASE REPLACEMENT FOR JSONBIN
+let firebaseUnsubscribe = null;
+
 async function cloudLoad(){
-  try{
-    const res = await fetch(`${CONFIG.JSONBIN.baseUrl}/${CONFIG.JSONBIN.binId}?meta=false`,{headers:{'X-Access-Key':CONFIG.JSONBIN.accessKey}});
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const data = await res.json();
+  if (!window.firebaseDB) return false;
+  try {
+    const { docRef, getDoc } = window.firebaseDB;
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      
+      const myPhone = currentUser ? normPhone(currentUser.phone) : null;
+      const mySnapshot = currentUser ? JSON.parse(JSON.stringify(currentUser)) : null;
 
-    const myPhone = currentUser ? normPhone(currentUser.phone) : null;
-    const mySnapshot = currentUser ? JSON.parse(JSON.stringify(currentUser)) : null;
+      STORAGE_KEYS.forEach(k => { 
+        if (k === 'announcement') { STATE[k] = data[k] || DEFAULT_ANNOUNCEMENT; } 
+        else if (k === 'customCode') { STATE[k] = data[k] || { css: '', js: '', html: '' }; }
+        else { STATE[k] = Array.isArray(data[k]) ? data[k] : []; }
+      });
+      
+      STATE.carStatusOverrides = data.carStatusOverrides || {};
+      CUSTOM_CARS = Array.isArray(data.customCars) ? data.customCars : [];
 
-    STORAGE_KEYS.forEach(k=>{ 
-      if (k === 'announcement') { STATE[k] = data[k] || DEFAULT_ANNOUNCEMENT; } 
-      else if (k === 'customCode') { STATE[k] = data[k] || { css: '', js: '', html: '' }; }
-      else { STATE[k]=Array.isArray(data[k])?data[k]:[]; }
-    });
-    
-    STATE.carStatusOverrides = (data.carStatusOverrides && typeof data.carStatusOverrides === 'object' && !Array.isArray(data.carStatusOverrides)) ? data.carStatusOverrides : {};
-    CUSTOM_CARS = Array.isArray(data.customCars) ? data.customCars : [];
-
-    if(myPhone){
-      const fresh = STATE.users.find(u => normPhone(u.phone) === myPhone);
-      if(fresh){
-        if(mySnapshot){
-          const localTime = new Date(mySnapshot.updatedAt || 0).getTime();
-          const cloudTime = new Date(fresh.updatedAt || 0).getTime();
-          if(localTime > cloudTime){
-            Object.assign(fresh, mySnapshot);
-            touchUser(fresh);
+      if(myPhone){
+        const freshUser = STATE.users.find(u => normPhone(u.phone) === myPhone);
+        if(freshUser){
+          if(mySnapshot){
+            const localTime = new Date(mySnapshot.updatedAt || 0).getTime();
+            const cloudTime = new Date(freshUser.updatedAt || 0).getTime();
+            if(localTime > cloudTime){
+              Object.assign(freshUser, mySnapshot);
+              touchUser(freshUser);
+            }
           }
+          currentUser = freshUser;
+          sessionSave(SS_CURRENT, freshUser);
+        } else {
+          currentUser = null;
+          sessionRemove(SS_CURRENT);
         }
-        currentUser = fresh;
-        sessionSave(SS_CURRENT, fresh);
-      } else {
-        currentUser = null;
-        sessionRemove(SS_CURRENT);
+      }
+
+      saveStateLocal();
+      applyCarOverrides();
+      applyCustomCode();
+      return true;
+    } else {
+      await cloudSync();
+      return true;
+    }
+  } catch(e) {
+    console.warn('Firebase load failed:', e.message); 
+    return false; 
+  }
+}
+
+function debouncedSave(){ saveStateLocal(); if(syncTimer)clearTimeout(syncTimer); syncTimer=setTimeout(cloudSync,CONFIG.SYNC_DEBOUNCE_MS); }
+
+async function cloudSync(){
+  if (!window.firebaseDB) return false;
+  if (!navigator.onLine) return false;
+  if(syncing) return false;
+  syncing = true;
+  try {
+    const { docRef, setDoc } = window.firebaseDB;
+    await setDoc(docRef, Object.assign({}, STATE, { customCars: CUSTOM_CARS }));
+    return true;
+  } catch(e) {
+    console.error('Firebase sync failed:', e.message); 
+    return false; 
+  } finally {
+    syncing = false;
+  }
+}
+
+function startFirebaseListener() {
+  if (!window.firebaseDB) return;
+  if (firebaseUnsubscribe) firebaseUnsubscribe();
+  
+  const { docRef, onSnapshot } = window.firebaseDB;
+  firebaseUnsubscribe = onSnapshot(docRef, (docSnap) => {
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      STORAGE_KEYS.forEach(k => { 
+        if (k !== 'announcement' && k !== 'customCode') { STATE[k] = Array.isArray(data[k]) ? data[k] : []; }
+      });
+      STATE.carStatusOverrides = data.carStatusOverrides || {};
+      CUSTOM_CARS = Array.isArray(data.customCars) ? data.customCars : [];
+      
+      if (currentUser && !currentUser.isAdmin) {
+        const freshUser = STATE.users.find(u => normPhone(u.phone) === normPhone(currentUser.phone));
+        if (freshUser) { currentUser = freshUser; }
+        updateSupportBadge();
+        if(document.getElementById('homePage').classList.contains('active')) loadHome();
+        if(document.getElementById('supportPage').classList.contains('active')) loadSupport();
       }
     }
+  });
+}
 
-    saveStateLocal();
-    applyCarOverrides();
-    applyCustomCode();
-    return true;
-  }catch(e){ console.warn('Cloud load failed:',e.message); return false; }
-}
-function debouncedSave(){ saveStateLocal(); if(syncTimer)clearTimeout(syncTimer); syncTimer=setTimeout(cloudSync,CONFIG.SYNC_DEBOUNCE_MS); }
-async function cloudSync(){
-  if(syncing) return false;
-  if(!navigator.onLine) return false;
-  syncing = true;
-  try{
-    const res = await fetch(`${CONFIG.JSONBIN.baseUrl}/${CONFIG.JSONBIN.binId}`,{
-      method:'PUT', headers:{'Content-Type':'application/json','X-Access-Key':CONFIG.JSONBIN.accessKey},
-      body: JSON.stringify(Object.assign({}, STATE, { customCars: CUSTOM_CARS }))
-    });
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    return true;
-  }catch(e){ console.error('Cloud sync failed:',e.message); return false; }
-  finally{ syncing = false; }
-}
 window.addEventListener('online',()=>{ document.getElementById('offlineBanner').classList.remove('show'); cloudSync(); });
 window.addEventListener('offline',()=>{ document.getElementById('offlineBanner').classList.add('show'); });
 
@@ -2003,7 +1932,6 @@ async function handleRegister(){
 
   if(!username){ showFormError('regError','Username is required'); return; }
 
-  // Username doubles as the referral code, so it must be URL-safe
   if(!/^[a-zA-Z0-9_]{3,20}$/.test(username)){
     showFormError('regError','Username must be 3–20 characters (letters, numbers, underscore)');
     return;
@@ -2014,7 +1942,6 @@ async function handleRegister(){
   if(pw!==cf){ showFormError('regError','Passwords do not match'); return; }
   if(!ref){ showFormError('regError','Referral code is required'); return; }
 
-  // Username → referral code ⇒ must be unique (case-insensitive) across both fields
   const unameLower = username.toLowerCase();
   const unameClash = STATE.users.some(u =>
     (u.username||'').toLowerCase() === unameLower ||
@@ -2035,7 +1962,7 @@ async function handleRegister(){
   const newU = {
     id:genId('u'), username: username, phone:phone, password:pw, country:selRegCountry,
     balance:5000, wallet:0, isAdmin:false,
-    referralCode: username,          // ← username IS the referral code
+    referralCode: username,
     referredBy:referrer.phone, totalDeposits:0, totalWithdrawn:0,
     registrationDate:new Date().toISOString(), suspended:false,
     lastBonusClaim:null, favorites:[]
@@ -2288,7 +2215,6 @@ function showNextWithdrawToast(){
   }, TOAST_VISIBLE_MS);
 }
 
-/* ═══════════════ HOME ═══════════════ */
 function loadHome(){
   if(!currentUser) return;
   const phone = normPhone(currentUser.phone);
@@ -2948,12 +2874,9 @@ function loadTeam(){
   const lvl3Comm = STATE.transactions.filter(t=>normPhone(t.phone)===phone&&t.type==='referral_bonus_l3').reduce((s,t)=>s+toNum(t.amount), 0);
   document.getElementById('teamLvl3').innerHTML = lvl3Comm.toLocaleString() + ' <span style="font-size:10px;color:var(--ink-3)">UGX</span>';
 
-  // ── ROBUST REFERRER LOOKUP ──
   let referrerName = '—';
   if (currentUser.referredBy) {
     let r = findUserByPhone(currentUser.referredBy);
-    
-    // Safeguard if referredBy happens to store the username
     if (!r) {
       const refStr = String(currentUser.referredBy).trim().toUpperCase();
       r = STATE.users.find(u => 
@@ -2961,7 +2884,6 @@ function loadTeam(){
         (u.referralCode || '').toUpperCase() === refStr
       );
     }
-    
     if (r) {
       referrerName = r.username || r.referralCode || r.phone;
     } else {
@@ -2977,7 +2899,6 @@ function loadTeam(){
   }
   
   tableBody.innerHTML = refs.sort((a,b)=>new Date(b.date)-new Date(a.date)).map(r=>{
-    // Get the ACTUAL username of the downline user
     const referee = findUserByPhone(r.refereePhone);
     const username = (referee && referee.username) ? referee.username : 'Investor ' + r.refereePhone.slice(-4);
     
@@ -3125,7 +3046,6 @@ async function sendSupport(){
   showToast('Message sent to admin','success');
 }
 
-// Helper function to compress images before saving to JSONBin
 function compressImage(file, maxWidth = 600, maxHeight = 600, quality = 0.6) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -3175,7 +3095,6 @@ function handleSupportImage(input) {
   input.value = '';
 }
 
-/* ============ ADMIN ============ */
 function loadAdmin(){
   if(!currentUser||!currentUser.isAdmin){ showPage('homePage'); return; }
   const tu = STATE.users.filter(u=>!u.isAdmin).length;
@@ -3977,37 +3896,6 @@ document.addEventListener('visibilitychange',()=>{
 });
 
 window.addEventListener('DOMContentLoaded',()=>{
-  setInterval(()=>{
-    if(currentUser && currentUser.isAdmin && document.getElementById('adminPage').classList.contains('active')){
-      cloudLoad().then(()=>{
-        if(adminCurrentThread) renderAdminThread();
-        renderAdminMsgs();
-        adminRenderCarList();
-        adminRenderCarStatus();
-        adminPopulateCarDropdown();
-      });
-    }
-    if(currentUser && !currentUser.isAdmin){
-      cloudLoad().then(()=>{
-        updateSupportBadge();
-        loadHome();
-        const active = document.getElementById('wt_active');
-        if(!active){
-          const fresh = buildWithdrawQueue();
-          if(fresh.length){
-            const sameLength = fresh.length === withdrawToastQueue.length;
-            const sameFirst = fresh[0] && withdrawToastQueue[0] && fresh[0].id === withdrawToastQueue[0].id;
-            if(!sameLength || !sameFirst){
-              withdrawToastQueue = fresh;
-              if(withdrawToastIndex >= withdrawToastQueue.length) withdrawToastIndex = 0;
-            }
-          }
-        }
-        if(document.getElementById('supportPage').classList.contains('active')) loadSupport();
-      });
-    }
-  }, 15000);
-
   document.getElementById('wdPhone').addEventListener('input',updatePhoneUI);
   document.getElementById('wdPhone').addEventListener('blur',updatePhoneUI);
   document.getElementById('wdAmount').addEventListener('input',calcWithdraw);
@@ -4015,14 +3903,16 @@ window.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('depPhone').addEventListener('blur',validateDepositPhone);
   document.getElementById('depAmount').addEventListener('input',()=>{document.getElementById('depAmount').classList.remove('has-error');document.getElementById('depError').style.display='none';});
   ['acPrice','acDaily','acDays'].forEach(id => { const el = document.getElementById(id); if(el) el.addEventListener('input', updateCarPreview); });
-  init();
+  
+  init().then(() => {
+    startFirebaseListener();
+  });
 });
 
 window.addEventListener('beforeunload',()=>saveStateLocal());
 </script>
 
 <script>
-/* ══════════ INSTANT TAP ══════════ */
 (function () {
   'use strict';
   var SEL = 'button, a, [onclick], input[type="checkbox"], input[type="radio"], .admin-tab, .admin-quick, .admin-chip, .au-btn, .acli-btn, .nav-item';
