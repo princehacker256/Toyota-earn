@@ -32,7 +32,7 @@ body{font-family:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;color:var
 /* ═══════════════ INSTANT TAP ═══════════════ */
 button, a, [onclick], input, select, textarea, .menu-item, .quick-action,
 .country-item, .nav-item, .tab-pill, .quick-chip, .hero-dot, .admin-tab,
-.admin-quick, .admin-chip, .au-btn, .acli-btn, .chat-delete-btn, .cc-fav{
+.admin-quick, .admin-chip, .au-btn, .acli-btn, .chat-delete-btn, .cc-fav, .ut-btn{
   touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
 }
@@ -41,7 +41,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 }
 button:disabled{opacity:.4;cursor:not-allowed}
 button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
-:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:8px}
+:focus-visible{outline:2px solid #008000;outline-offset:2px;border-radius:8px}
 
 @media (hover: none){
   .quick-chip:hover{border-color:var(--line-2);color:var(--ink-2)}
@@ -87,6 +87,164 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .page.active{display:block}
 @keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
+/* ═══════════════ AUTH (DARK · APP THEME) ═══════════════ */
+.ut-auth-page{
+  position:relative;min-height:100vh;display:flex;flex-direction:column;
+  padding:0 20px 36px;
+  background:
+    radial-gradient(ellipse 620px 420px at 12% -8%,rgba(0,212,160,.12),transparent 62%),
+    radial-gradient(ellipse 520px 380px at 105% 12%,rgba(99,102,241,.10),transparent 60%),
+    var(--bg);
+}
+.ut-auth-page::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:44px 44px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 0%,#000 25%,transparent 78%);
+  mask-image:radial-gradient(ellipse 70% 55% at 50% 0%,#000 25%,transparent 78%);
+}
+.ut-auth-shell{
+  position:relative;z-index:1;width:100%;max-width:420px;margin:0 auto;flex:1;
+  display:flex;flex-direction:column;justify-content:center;
+  padding-top:10px;
+}
+.ut-auth-header{text-align:center;padding:34px 0 24px}
+.ut-logo-mark{
+  width:66px;height:66px;margin:0 auto 16px;border-radius:20px;
+  background:linear-gradient(135deg,#00d4a0,#00b389);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:800;color:#fff;
+  box-shadow:0 18px 40px -12px rgba(0,212,160,.65),inset 0 1px 0 rgba(255,255,255,.35);
+}
+.ut-brand{
+  font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:800;
+  letter-spacing:2.6px;color:#fff;margin-bottom:24px;
+}
+.ut-brand span{
+  background:linear-gradient(135deg,#00d4a0,#38bdf8);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.ut-auth-title{
+  font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:800;
+  letter-spacing:-.7px;color:#fff;margin-bottom:8px;
+}
+.ut-auth-sub{
+  font-size:13px;font-weight:500;color:var(--ink-3);line-height:1.55;
+  max-width:290px;margin:0 auto;
+}
+.ut-card{
+  background:linear-gradient(180deg,#131b28 0%,#0f1622 100%);
+  border:1px solid var(--line-2);border-radius:22px;padding:24px 20px 22px;
+  box-shadow:0 28px 56px -24px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.045);
+}
+.ut-form-group{margin-bottom:17px}
+.ut-label{
+  display:block;font-size:10.5px;font-weight:800;color:var(--ink-2);
+  letter-spacing:.7px;text-transform:uppercase;margin-bottom:8px;
+}
+.ut-input-wrap,.ut-pw-wrap{position:relative}
+.ut-input,.ut-select{
+  width:100%;padding:15px 16px;background:var(--bg-2);
+  border:1.5px solid var(--line);border-radius:13px;
+  font-size:16px;font-weight:600;color:#fff;outline:none;
+  font-family:'Manrope',sans-serif;
+  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+  -webkit-appearance:none;appearance:none;
+}
+.ut-input::placeholder{color:var(--ink-4);font-weight:500}
+.ut-input:focus,.ut-select:focus{
+  border-color:var(--brand);background:#0a1220;
+  box-shadow:0 0 0 4px var(--brand-soft);
+}
+.ut-input.has-icon{padding-left:46px}
+.ut-input-icon{
+  position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  font-size:14px;color:var(--ink-4);pointer-events:none;
+  transition:color .18s ease;
+}
+.ut-input-wrap:focus-within .ut-input-icon,
+.ut-pw-wrap:focus-within .ut-input-icon{color:var(--brand)}
+.ut-pw-wrap .ut-input{padding-right:50px}
+.ut-eye{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  color:var(--ink-3);font-size:14px;background:transparent;border:none;cursor:pointer;
+  transition:color .15s ease,background .15s ease;
+}
+.ut-eye:hover,.ut-eye:active{color:var(--brand);background:var(--brand-soft)}
+.ut-select{
+  background-image:url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8599' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;
+  padding-right:44px;cursor:pointer;
+}
+.ut-select option{background:#111826;color:#fff}
+.ut-hint{font-size:11.5px;font-weight:700;margin-top:8px;min-height:15px;display:flex;align-items:center;gap:6px}
+
+/* Password strength */
+.pw-strength{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:10px}
+.pw-strength-bar{height:4px;border-radius:4px;background:#1c2538;transition:background .25s ease}
+.pw-strength-text{
+  display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;
+  margin-top:8px;color:var(--ink-3);
+}
+.pw-strength-text i{font-size:10px}
+.pw-reqs{
+  background:var(--bg-2);border:1px solid var(--line);
+  border-radius:12px;padding:12px;margin-top:10px;
+}
+.pw-reqs-title{
+  font-size:9.5px;font-weight:800;color:var(--ink-4);
+  letter-spacing:.7px;text-transform:uppercase;margin-bottom:8px;
+}
+.pw-req{
+  font-size:11px;font-weight:600;color:var(--ink-3);
+  display:flex;align-items:center;gap:7px;padding:2px 0;
+}
+.pw-req i{font-size:6px;color:var(--ink-4)}
+
+/* Primary button */
+.ut-btn{
+  width:100%;padding:16px;border-radius:14px;border:none;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:800;
+  letter-spacing:-.2px;color:#0a0e1a;margin-top:6px;
+  background:linear-gradient(135deg,#00d4a0 0%,#00b389 60%,#009e78 100%);
+  box-shadow:0 14px 30px -10px rgba(0,212,160,.55),inset 0 1px 0 rgba(255,255,255,.35);
+  transition:transform .08s ease,box-shadow .18s ease,filter .18s ease;
+}
+.ut-btn:active{transform:scale(.98);box-shadow:0 8px 18px -8px rgba(0,212,160,.5),inset 0 1px 0 rgba(255,255,255,.35)}
+.ut-btn:disabled{background:#1c2538;color:var(--ink-4);box-shadow:none;cursor:not-allowed}
+.ut-btn.loading{
+  color:transparent;pointer-events:none;position:relative;
+  background:linear-gradient(135deg,#00d4a0 0%,#00b389 60%,#009e78 100%);
+  box-shadow:0 14px 30px -10px rgba(0,212,160,.55),inset 0 1px 0 rgba(255,255,255,.35);
+}
+.ut-btn.loading::after{
+  content:'';position:absolute;width:18px;height:18px;top:50%;left:50%;
+  margin:-9px 0 0 -9px;border:2px solid rgba(10,14,26,.3);
+  border-top-color:#0a0e1a;border-radius:50%;animation:spin .7s linear infinite;
+}
+
+/* Alerts */
+.ut-error-msg,.ut-success-msg{
+  display:none;font-size:12.5px;font-weight:700;margin-top:12px;
+  padding:11px 13px;border-radius:11px;text-align:center;line-height:1.45;
+}
+.ut-error-msg{color:#fda4af;background:rgba(244,63,94,.10);border:1px solid rgba(244,63,94,.25)}
+.ut-success-msg{color:var(--brand);background:rgba(0,212,160,.10);border:1px solid rgba(0,212,160,.25)}
+
+/* Footer */
+.ut-footer{text-align:center;margin-top:22px;font-size:13.5px;color:var(--ink-3);font-weight:600}
+.ut-footer span{color:var(--brand);font-weight:800;cursor:pointer}
+.ut-footer span:active{opacity:.7}
+.ut-secure{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  margin-top:24px;font-size:10.5px;font-weight:700;color:var(--ink-4);letter-spacing:.4px;
+}
+.ut-secure i{color:var(--brand);font-size:11px}
+
+/* ═══════════════ APP THEME (DARK) ═══════════════ */
 .hero-welcome{margin:0 16px 20px;border-radius:var(--r-xl);padding:24px 22px 22px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1a2338 0%,#0f1625 100%);border:1px solid var(--line-2);box-shadow:var(--sh-md)}
 .hero-welcome::before{content:'';position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,160,.18),transparent 65%);top:-140px;right:-100px;pointer-events:none}
 .hero-welcome::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.15),transparent 65%);bottom:-100px;left:-60px;pointer-events:none}
@@ -350,699 +508,6 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .country-item .ci-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--ink-4);display:flex;align-items:center;justify-content:center}
 .country-item.selected .ci-radio{border-color:var(--brand)}
 .country-item.selected .ci-radio::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--brand)}
-
-/* ═══════════════════════════════════════════════════ */
-/* PREMIUM AUTH REDESIGN                               */
-/* ═══════════════════════════════════════════════════ */
-
-.auth-shell {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg);
-  position: relative;
-  overflow: hidden;
-}
-
-.auth-shell::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 500px 400px at 20% 0%, rgba(0,212,160,.16), transparent 60%),
-    radial-gradient(ellipse 500px 400px at 85% 25%, rgba(56,189,248,.11), transparent 60%),
-    radial-gradient(ellipse 400px 400px at 50% 100%, rgba(99,102,241,.10), transparent 60%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.auth-orb {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  filter: blur(60px);
-  z-index: 0;
-  opacity: 0.7;
-}
-
-.auth-orb.o1 {
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(circle, rgba(0,212,160,.35), transparent 70%);
-  top: -120px;
-  right: -100px;
-  animation: orb1 14s ease-in-out infinite;
-}
-
-.auth-orb.o2 {
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle, rgba(56,189,248,.28), transparent 70%);
-  top: 38%;
-  left: -100px;
-  animation: orb2 18s ease-in-out infinite;
-}
-
-.auth-orb.o3 {
-  width: 260px;
-  height: 260px;
-  background: radial-gradient(circle, rgba(99,102,241,.22), transparent 70%);
-  bottom: -100px;
-  right: 15%;
-  animation: orb3 16s ease-in-out infinite;
-}
-
-@keyframes orb1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%      { transform: translate(-20px, 35px) scale(1.15); }
-}
-@keyframes orb2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%      { transform: translate(25px, -25px) scale(1.1); }
-}
-@keyframes orb3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%      { transform: translate(-15px, -30px) scale(1.08); }
-}
-
-.auth-hero {
-  position: relative;
-  padding: 60px 24px 88px;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.auth-hero-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.auth-hero-logo {
-  width: 84px;
-  height: 84px;
-  border-radius: 26px;
-  background: linear-gradient(135deg, #00d4a0, #00b389);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 38px;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 22px;
-  font-family: 'Space Grotesk', sans-serif;
-  box-shadow:
-    0 24px 48px -12px rgba(0,212,160,.6),
-    0 0 0 8px rgba(0,212,160,.05),
-    inset 0 1px 0 rgba(255,255,255,.35);
-  animation: logoFloat 3.4s ease-in-out infinite;
-  position: relative;
-}
-
-.auth-hero-logo::before {
-  content: '';
-  position: absolute;
-  inset: -16px;
-  border-radius: 36px;
-  background: linear-gradient(135deg, rgba(0,212,160,.35), transparent);
-  z-index: -1;
-  filter: blur(22px);
-}
-
-@keyframes logoFloat {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
-
-.auth-hero-brand {
-  font-size: 28px;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 12px;
-  font-family: 'Space Grotesk', sans-serif;
-  letter-spacing: -0.6px;
-}
-
-.auth-hero-brand span {
-  background: linear-gradient(135deg, #00d4a0, #38bdf8);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.auth-hero-tag {
-  font-size: 13px;
-  color: var(--ink-3);
-  font-weight: 500;
-  max-width: 280px;
-  line-height: 1.55;
-}
-
-.auth-hero-badges {
-  display: flex;
-  gap: 8px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.auth-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.08);
-  padding: 7px 13px;
-  border-radius: 999px;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: var(--ink-2);
-  letter-spacing: 0.3px;
-  backdrop-filter: blur(10px);
-}
-
-.auth-hero-badge i {
-  color: var(--brand);
-  font-size: 10px;
-}
-
-.auth-card {
-  position: relative;
-  z-index: 2;
-  flex: 1;
-  margin-top: -60px;
-  background: linear-gradient(180deg, rgba(22,30,46,.98) 0%, rgba(17,24,38,1) 100%);
-  backdrop-filter: blur(30px);
-  border-radius: 32px 32px 0 0;
-  padding: 32px 24px 40px;
-  border-top: 1px solid rgba(255,255,255,.08);
-  box-shadow:
-    0 -30px 60px -20px rgba(0,0,0,.5),
-    inset 0 1px 0 rgba(255,255,255,.04);
-}
-
-.auth-card-head {
-  margin-bottom: 26px;
-}
-
-.auth-card-head h1 {
-  font-size: 26px;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 8px;
-  font-family: 'Space Grotesk', sans-serif;
-  letter-spacing: -0.6px;
-  line-height: 1.15;
-}
-
-.auth-card-head h1 span {
-  background: linear-gradient(135deg, #00d4a0, #38bdf8);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.auth-card-head p {
-  font-size: 13.5px;
-  color: var(--ink-3);
-  line-height: 1.55;
-  margin: 0;
-  font-weight: 500;
-}
-
-.auth-field {
-  margin-bottom: 18px;
-}
-
-.auth-field-label {
-  display: flex;
-  align-items: center;
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--ink-2);
-  margin-bottom: 9px;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-}
-
-.auth-field-label .req {
-  color: var(--rose);
-  font-size: 11px;
-  margin-left: 3px;
-}
-
-.auth-control {
-  display: flex;
-  align-items: center;
-  background: rgba(10,14,26,.55);
-  border: 1.5px solid rgba(255,255,255,.08);
-  border-radius: 14px;
-  overflow: hidden;
-  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
-  position: relative;
-}
-
-.auth-control:hover {
-  border-color: rgba(255,255,255,.13);
-}
-
-.auth-control:focus-within {
-  border-color: var(--brand);
-  background: rgba(10,14,26,.85);
-  box-shadow:
-    0 0 0 4px rgba(0,212,160,.12),
-    0 4px 16px -4px rgba(0,212,160,.18);
-}
-
-.auth-control.has-error {
-  border-color: var(--rose);
-  box-shadow: 0 0 0 4px rgba(244,63,94,.12);
-}
-
-.auth-control.is-valid {
-  border-color: var(--brand);
-}
-
-.auth-control .ac-icon {
-  padding-left: 16px;
-  color: var(--ink-3);
-  font-size: 14px;
-  transition: color .2s ease;
-}
-
-.auth-control:focus-within .ac-icon {
-  color: var(--brand);
-}
-
-.auth-control input {
-  flex: 1;
-  padding: 16px 14px;
-  border: none;
-  background: transparent;
-  font-size: 15px;
-  font-weight: 600;
-  color: #fff;
-  outline: none;
-  min-width: 0;
-  font-family: inherit;
-}
-
-.auth-control input::placeholder {
-  color: var(--ink-4);
-  font-weight: 500;
-}
-
-.auth-control .ac-prefix {
-  padding: 16px 14px;
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--ink-2);
-  border-right: 1.5px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.02);
-  font-family: 'Space Grotesk', sans-serif;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: color .2s ease;
-}
-
-.auth-control:focus-within .ac-prefix {
-  color: var(--brand);
-}
-
-.auth-control .ac-eye {
-  padding: 0 16px;
-  color: var(--ink-3);
-  font-size: 14px;
-  align-self: stretch;
-  display: flex;
-  align-items: center;
-  transition: color .2s ease;
-}
-
-.auth-control .ac-eye:hover {
-  color: var(--brand);
-}
-
-.auth-country {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 15px 16px;
-  background: rgba(10,14,26,.55);
-  border: 1.5px solid rgba(255,255,255,.08);
-  border-radius: 14px;
-  color: #fff;
-  font-size: 14.5px;
-  font-family: inherit;
-  font-weight: 600;
-  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
-  cursor: pointer;
-  text-align: left;
-}
-
-.auth-country:hover {
-  border-color: rgba(255,255,255,.13);
-  background: rgba(10,14,26,.85);
-}
-
-.auth-country:focus-within {
-  border-color: var(--brand);
-  box-shadow: 0 0 0 4px rgba(0,212,160,.12);
-}
-
-.auth-country .ac-flag {
-  font-size: 24px;
-  line-height: 1;
-}
-
-.auth-country .ac-name {
-  flex: 1;
-  text-align: left;
-  font-weight: 700;
-}
-
-.auth-country .ac-cur {
-  font-size: 10.5px;
-  font-weight: 800;
-  color: var(--brand);
-  background: rgba(0,212,160,.1);
-  padding: 5px 11px;
-  border-radius: 999px;
-  border: 1px solid rgba(0,212,160,.2);
-  letter-spacing: 0.3px;
-}
-
-.auth-country .ac-chev {
-  color: var(--ink-3);
-  font-size: 11px;
-}
-
-.auth-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 4px 0 22px;
-}
-
-.auth-remember {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  cursor: pointer;
-}
-
-.auth-remember input {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--brand);
-  cursor: pointer;
-}
-
-.auth-remember span {
-  font-size: 12.5px;
-  color: var(--ink-2);
-  font-weight: 600;
-}
-
-.auth-forgot {
-  font-size: 12.5px;
-  color: var(--brand);
-  font-weight: 800;
-  text-decoration: none;
-  cursor: pointer;
-  padding: 6px 0;
-  transition: opacity .15s ease;
-}
-
-.auth-forgot:hover {
-  opacity: 0.8;
-}
-
-.auth-cta {
-  width: 100%;
-  padding: 17px;
-  background: linear-gradient(135deg, #00d4a0 0%, #00b389 100%);
-  color: #0a0e1a;
-  border-radius: 14px;
-  font-weight: 800;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-family: 'Space Grotesk', sans-serif;
-  position: relative;
-  overflow: hidden;
-  letter-spacing: -0.2px;
-  box-shadow:
-    0 12px 28px -8px rgba(0,212,160,.5),
-    inset 0 1px 0 rgba(255,255,255,.35);
-  transition: transform .08s ease, box-shadow .15s ease;
-}
-
-.auth-cta::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
-  animation: btnShimmer 3s ease-in-out infinite;
-}
-
-@keyframes btnShimmer {
-  0%       { left: -100%; }
-  55%, 100% { left: 100%; }
-}
-
-.auth-cta:not(:disabled):active {
-  transform: scale(.98);
-  box-shadow:
-    0 6px 16px -4px rgba(0,212,160,.5),
-    inset 0 1px 0 rgba(255,255,255,.35);
-}
-
-.auth-cta:disabled {
-  background: var(--surface-2);
-  color: var(--ink-4);
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-.auth-cta:disabled::before { display: none; }
-
-.auth-cta.loading {
-  color: transparent;
-  pointer-events: none;
-}
-
-.auth-cta.loading::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 2.5px solid rgba(10,14,26,.3);
-  border-top-color: #0a0e1a;
-  border-radius: 50%;
-  animation: spin .7s linear infinite;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-}
-
-.auth-divider {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 26px 0 18px;
-}
-
-.auth-divider::before,
-.auth-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.1), transparent);
-}
-
-.auth-divider span {
-  font-size: 10px;
-  font-weight: 800;
-  color: var(--ink-4);
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-}
-
-.auth-alt-btn {
-  width: 100%;
-  padding: 15px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 14px;
-  font-weight: 700;
-  font-size: 13.5px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: background .15s ease, border-color .15s ease, transform .08s ease;
-}
-
-.auth-alt-btn:hover {
-  background: rgba(255,255,255,.06);
-  border-color: rgba(255,255,255,.14);
-}
-
-.auth-alt-btn:active {
-  transform: scale(.98);
-}
-
-.auth-alt-btn i {
-  color: var(--brand);
-  font-size: 12px;
-}
-
-.auth-trust {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255,255,255,.06);
-  flex-wrap: wrap;
-}
-
-.auth-trust span {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: var(--ink-4);
-  letter-spacing: 0.3px;
-}
-
-.auth-trust i {
-  color: var(--brand);
-  font-size: 10px;
-  opacity: 0.8;
-}
-
-.auth-error-msg {
-  display: none;
-  color: var(--rose);
-  font-size: 12.5px;
-  margin-top: 14px;
-  text-align: center;
-  font-weight: 700;
-  background: rgba(244,63,94,.08);
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(244,63,94,.2);
-}
-
-.auth-success-msg {
-  display: none;
-  color: var(--brand);
-  font-size: 12.5px;
-  margin-top: 14px;
-  text-align: center;
-  font-weight: 700;
-  background: rgba(0,212,160,.08);
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,212,160,.2);
-}
-
-.pw-strength {
-  display: flex;
-  gap: 5px;
-  margin-top: 10px;
-}
-
-.pw-strength-bar {
-  flex: 1;
-  height: 4px;
-  border-radius: 4px;
-  background: rgba(255,255,255,.06);
-  transition: background .25s ease, box-shadow .25s ease;
-}
-
-.pw-strength-bar.on-weak   { background: var(--rose);  box-shadow: 0 0 8px rgba(244,63,94,.3); }
-.pw-strength-bar.on-fair   { background: var(--gold);  box-shadow: 0 0 8px rgba(255,184,0,.3); }
-.pw-strength-bar.on-good   { background: var(--brand); box-shadow: 0 0 8px rgba(0,212,160,.3); }
-.pw-strength-bar.on-strong { background: var(--brand); box-shadow: 0 0 10px rgba(0,212,160,.5); }
-
-.pw-strength-text {
-  font-size: 11.5px;
-  font-weight: 700;
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.pw-strength-text.weak   { color: var(--rose); }
-.pw-strength-text.fair   { color: var(--gold); }
-.pw-strength-text.good   { color: var(--brand); }
-.pw-strength-text.strong { color: var(--brand); }
-.pw-strength-text.empty  { color: var(--ink-3); }
-
-.pw-reqs {
-  background: rgba(10,14,26,.5);
-  border: 1px solid rgba(255,255,255,.06);
-  border-radius: 12px;
-  padding: 14px;
-  margin-top: 10px;
-  display: none;
-}
-
-.pw-reqs.show { display: block; }
-
-.pw-reqs-title {
-  font-size: 10.5px;
-  font-weight: 800;
-  color: var(--ink-3);
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.pw-req {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-3);
-  padding: 4px 0;
-  transition: color .2s ease;
-}
-
-.pw-req i {
-  font-size: 11px;
-  width: 14px;
-  flex-shrink: 0;
-  transition: color .2s ease;
-}
-
-.pw-req.met {
-  color: var(--brand);
-}
-
-.pw-req.met i {
-  color: var(--brand);
-}
 
 /* ═══════════════ BOTTOM NAV ═══════════════ */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;max-width:480px;margin:0 auto;background:rgba(17,24,38,.92);backdrop-filter:blur(20px);border-top:1px solid var(--line-2);padding:10px 8px calc(14px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-around}
@@ -1355,149 +820,131 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 <!-- CUSTOM HTML INJECTION CONTAINER -->
 <div id="customAdminHtml"></div>
 
-<!-- ═══════════ LOGIN PAGE (PREMIUM) ═══════════ -->
-<div id="loginPage" class="page active"><div class="auth-shell">
-  <div class="auth-orb o1"></div>
-  <div class="auth-orb o2"></div>
-  <div class="auth-orb o3"></div>
+<!-- ═══════════ LOGIN PAGE (DARK · APP THEME) ═══════════ -->
+<div id="loginPage" class="page active">
+  <div class="ut-auth-page">
+    <div class="ut-auth-shell">
+      <div class="ut-auth-header">
+        <div class="ut-logo-mark">T</div>
+        <div class="ut-brand">TOYOTA <span>EARN</span></div>
+        <h2 class="ut-auth-title">Welcome back</h2>
+        <p class="ut-auth-sub">Sign in to track your cars and collect your daily earnings.</p>
+      </div>
 
-  <div class="auth-hero"><div class="auth-hero-inner">
-    <div class="auth-hero-logo">T</div>
-    <div class="auth-hero-brand">TOYOTA <span>EARN</span></div>
-    <div class="auth-hero-tag">Drive daily returns with trusted auto investments</div>
-    <div class="auth-hero-badges">
-      <div class="auth-hero-badge"><i class="fas fa-shield-alt"></i> Secure</div>
-      <div class="auth-hero-badge"><i class="fas fa-bolt"></i> Instant</div>
-      <div class="auth-hero-badge"><i class="fas fa-users"></i> 10K+ Users</div>
-    </div>
-  </div></div>
+      <div class="ut-card">
+        <form onsubmit="event.preventDefault();handleLogin();" novalidate>
+          <div class="ut-form-group">
+            <label class="ut-label" for="loginPhone">Phone number</label>
+            <div class="ut-input-wrap">
+              <i class="fas fa-mobile-alt ut-input-icon"></i>
+              <input type="tel" id="loginPhone" class="ut-input has-icon" placeholder="e.g. 0771234567" autocomplete="tel" inputmode="tel" />
+            </div>
+          </div>
 
-  <div class="auth-card">
-    <div class="auth-card-head">
-      <h1>Welcome <span>back</span></h1>
-      <p>Sign in to manage your cars and daily earnings.</p>
-    </div>
-    <form onsubmit="event.preventDefault();handleLogin();" novalidate>
-      <div class="auth-field">
-        <label class="auth-field-label" for="loginPhone">Phone Number</label>
-        <div class="auth-control" id="loginPhoneWrap">
-          <span class="ac-icon"><i class="fas fa-phone"></i></span>
-          <span class="ac-prefix" id="loginPrefix" onclick="openCountryModal('login')" style="cursor:pointer;display:flex;align-items:center;gap:5px">+256 <i class="fas fa-caret-down" style="font-size:10px;color:var(--ink-4)"></i></span>
-          <input type="tel" id="loginPhone" placeholder="712 345 678" autocomplete="tel" inputmode="tel" />
-        </div>
+          <div class="ut-form-group">
+            <label class="ut-label" for="loginPassword">Password</label>
+            <div class="ut-pw-wrap">
+              <i class="fas fa-lock ut-input-icon"></i>
+              <input type="password" id="loginPassword" class="ut-input has-icon" placeholder="••••••••" autocomplete="current-password" />
+              <button type="button" class="ut-eye" onclick="togglePw('loginPassword')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button>
+            </div>
+          </div>
+
+          <button class="ut-btn" id="loginBtn" type="submit">Login</button>
+          <div id="loginError" class="ut-error-msg"></div>
+        </form>
       </div>
-      <div class="auth-field">
-        <label class="auth-field-label" for="loginPassword">Password</label>
-        <div class="auth-control" id="loginPwWrap">
-          <span class="ac-icon"><i class="fas fa-lock"></i></span>
-          <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password" />
-          <button class="ac-eye" onclick="togglePw('loginPassword')" type="button"><i class="fas fa-eye"></i></button>
-        </div>
-      </div>
-      <div class="auth-meta">
-        <label class="auth-remember"><input type="checkbox" id="rememberMe"><span>Remember me</span></label>
-        <a class="auth-forgot" onclick="openModal('forgotAlert')">Forgot password?</a>
-      </div>
-      <button class="auth-cta" id="loginBtn" type="submit">Sign In <i class="fas fa-arrow-right"></i></button>
-      <div id="loginError" class="auth-error-msg"></div>
-    </form>
-    <div class="auth-divider"><span>New here?</span></div>
-    <button class="auth-alt-btn" onclick="showPage('registerPage')"><i class="fas fa-user-plus"></i> Create an account</button>
-    <div class="auth-trust">
-      <span><i class="fas fa-lock"></i> 256-bit SSL</span>
-      <span><i class="fas fa-headset"></i> 24/7 Support</span>
-      <span><i class="fas fa-check-circle"></i> Verified</span>
+
+      <div class="ut-footer">New here? <span onclick="showPage('registerPage')">Create an account</span></div>
+      <div class="ut-secure"><i class="fas fa-shield-alt"></i> Secure sign-in · Your data is protected</div>
     </div>
   </div>
-</div></div>
+</div>
 
-<!-- ═══════════ REGISTER PAGE (PREMIUM) ═══════════ -->
-<div id="registerPage" class="page"><div class="auth-shell">
-  <div class="auth-orb o1"></div>
-  <div class="auth-orb o2"></div>
-  <div class="auth-orb o3"></div>
+<!-- ═══════════ REGISTER PAGE (DARK · APP THEME) ═══════════ -->
+<div id="registerPage" class="page">
+  <div class="ut-auth-page">
+    <div class="ut-auth-shell">
+      <div class="ut-auth-header">
+        <div class="ut-logo-mark">T</div>
+        <div class="ut-brand">TOYOTA <span>EARN</span></div>
+        <h2 class="ut-auth-title">Create your account</h2>
+        <p class="ut-auth-sub">Join investors earning daily returns from Toyota cars.</p>
+      </div>
 
-  <div class="auth-hero"><div class="auth-hero-inner">
-    <div class="auth-hero-logo">T</div>
-    <div class="auth-hero-brand">TOYOTA <span>EARN</span></div>
-    <div class="auth-hero-tag">Start earning daily returns today</div>
-    <div class="auth-hero-badges">
-      <div class="auth-hero-badge"><i class="fas fa-gift"></i> 5,000 Bonus</div>
-      <div class="auth-hero-badge"><i class="fas fa-percent"></i> 30% Referral</div>
-    </div>
-  </div></div>
+      <div class="ut-card">
+        <form onsubmit="event.preventDefault();handleRegister();" novalidate>
 
-  <div class="auth-card">
-    <div class="auth-card-head">
-      <h1>Create <span>account</span></h1>
-      <p>Join thousands of investors earning consistent daily returns.</p>
-    </div>
-    <form onsubmit="event.preventDefault();handleRegister();" novalidate>
-      <div class="auth-field">
-        <label class="auth-field-label">Country</label>
-        <button type="button" class="auth-country" onclick="openCountryModal('register')">
-          <span class="ac-flag" id="regFlag">🇺🇬</span>
-          <span class="ac-name" id="regName">Uganda</span>
-          <span class="ac-cur" id="regCur">UGX</span>
-          <span class="ac-chev"><i class="fas fa-chevron-down"></i></span>
-        </button>
+          <div class="ut-form-group">
+            <label class="ut-label" for="regUsername">Username</label>
+            <div class="ut-input-wrap">
+              <i class="fas fa-user ut-input-icon"></i>
+              <input type="text" id="regUsername" class="ut-input has-icon" placeholder="Choose a username" autocomplete="username" />
+            </div>
+          </div>
+
+          <div class="ut-form-group">
+            <label class="ut-label" for="regCountrySelect">Country</label>
+            <select id="regCountrySelect" class="ut-select" onchange="updateRegCountry(this.value)">
+              <option value="UG">🇺🇬 Uganda (UGX)</option>
+              <option value="KE">🇰🇪 Kenya (KES)</option>
+              <option value="RW">🇷🇼 Rwanda (RWF)</option>
+              <option value="CD">🇨🇩 DRC Congo (CDF)</option>
+            </select>
+          </div>
+
+          <div class="ut-form-group">
+            <label class="ut-label" for="regPhone">Phone number</label>
+            <div class="ut-input-wrap">
+              <i class="fas fa-mobile-alt ut-input-icon"></i>
+              <input type="tel" id="regPhone" class="ut-input has-icon" placeholder="e.g. 0771234567" autocomplete="tel" inputmode="tel" />
+            </div>
+          </div>
+
+          <div class="ut-form-group">
+            <label class="ut-label" for="regPw">Password</label>
+            <div class="ut-pw-wrap">
+              <i class="fas fa-lock ut-input-icon"></i>
+              <input type="password" id="regPw" class="ut-input has-icon" placeholder="Min 6 characters" oninput="onPasswordInput(this.value)" autocomplete="new-password" />
+              <button type="button" class="ut-eye" onclick="togglePw('regPw')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button>
+            </div>
+            <div class="pw-strength" id="pwBars"><div class="pw-strength-bar"></div><div class="pw-strength-bar"></div><div class="pw-strength-bar"></div><div class="pw-strength-bar"></div></div>
+            <div class="pw-strength-text empty" id="pwText"><i class="fas fa-info-circle"></i><span>Use 6+ characters</span></div>
+            <div class="pw-reqs" id="pwReqs" style="display:none">
+              <div class="pw-reqs-title">Password Requirements</div>
+              <div class="pw-req" data-req="length"><i class="fas fa-circle"></i> At least 6 characters</div>
+            </div>
+          </div>
+
+          <div class="ut-form-group">
+            <label class="ut-label" for="regConfirm">Confirm password</label>
+            <div class="ut-pw-wrap">
+              <i class="fas fa-lock ut-input-icon"></i>
+              <input type="password" id="regConfirm" class="ut-input has-icon" placeholder="Re-enter password" oninput="onConfirmInput()" autocomplete="new-password" />
+            </div>
+            <div id="confirmHint" class="ut-hint"></div>
+          </div>
+
+          <div class="ut-form-group">
+            <label class="ut-label" for="regRef">Referral code</label>
+            <div class="ut-input-wrap">
+              <i class="fas fa-gift ut-input-icon"></i>
+              <input type="text" id="regRef" class="ut-input has-icon" placeholder="Enter referral code" oninput="validateRef(this.value)" autocomplete="off" />
+            </div>
+            <div id="refCheck" class="ut-hint"></div>
+          </div>
+
+          <button class="ut-btn" id="regBtn" type="submit" disabled>Register</button>
+          <div id="regError" class="ut-error-msg"></div>
+          <div id="regSuccess" class="ut-success-msg"></div>
+        </form>
       </div>
-      <div class="auth-field">
-        <label class="auth-field-label" for="regPhone">Phone Number <span class="req">*</span></label>
-        <div class="auth-control" id="regPhoneWrap">
-          <span class="ac-icon"><i class="fas fa-phone"></i></span>
-          <span class="ac-prefix" id="regPrefix">+256</span>
-          <input type="tel" id="regPhone" placeholder="712 345 678" autocomplete="tel" inputmode="tel" />
-        </div>
-      </div>
-      <div class="auth-field">
-        <label class="auth-field-label" for="regPw">Password <span class="req">*</span></label>
-        <div class="auth-control" id="regPwWrap">
-          <span class="ac-icon"><i class="fas fa-lock"></i></span>
-          <input type="password" id="regPw" placeholder="Create a strong password" oninput="onPasswordInput(this.value)" autocomplete="new-password" />
-          <button class="ac-eye" onclick="togglePw('regPw')" type="button"><i class="fas fa-eye"></i></button>
-        </div>
-        <div class="pw-strength" id="pwBars"><div class="pw-strength-bar"></div><div class="pw-strength-bar"></div><div class="pw-strength-bar"></div><div class="pw-strength-bar"></div></div>
-        <div class="pw-strength-text empty" id="pwText"><i class="fas fa-info-circle"></i><span>Use 8+ characters with letters, numbers &amp; a symbol</span></div>
-        <div class="pw-reqs" id="pwReqs">
-          <div class="pw-reqs-title">Password Requirements</div>
-          <div class="pw-req" data-req="length"><i class="fas fa-circle"></i> At least 8 characters</div>
-          <div class="pw-req" data-req="lower"><i class="fas fa-circle"></i> Contains lowercase letter</div>
-          <div class="pw-req" data-req="upper"><i class="fas fa-circle"></i> Contains uppercase letter</div>
-          <div class="pw-req" data-req="number"><i class="fas fa-circle"></i> Contains a number</div>
-          <div class="pw-req" data-req="symbol"><i class="fas fa-circle"></i> Contains a symbol (!@#$...)</div>
-        </div>
-      </div>
-      <div class="auth-field">
-        <label class="auth-field-label" for="regConfirm">Confirm Password</label>
-        <div class="auth-control" id="regConfirmWrap">
-          <span class="ac-icon"><i class="fas fa-lock"></i></span>
-          <input type="password" id="regConfirm" placeholder="Re-enter password" oninput="onConfirmInput()" autocomplete="new-password" />
-          <button class="ac-eye" onclick="togglePw('regConfirm')" type="button"><i class="fas fa-eye"></i></button>
-        </div>
-        <div id="confirmHint" style="font-size:11.5px;font-weight:700;margin-top:7px;min-height:15px"></div>
-      </div>
-      <div class="auth-field">
-        <label class="auth-field-label" for="regRef">Referral Code <span class="req">*</span></label>
-        <div class="auth-control" id="regRefWrap">
-          <span class="ac-icon"><i class="fas fa-tag"></i></span>
-          <input type="text" id="regRef" placeholder="Enter referrer's code" oninput="validateRef(this.value)" autocomplete="off" />
-        </div>
-        <div id="refCheck" style="font-size:11.5px;font-weight:700;margin-top:7px;min-height:15px"></div>
-      </div>
-      <button class="auth-cta" id="regBtn" type="submit" disabled><span>Create Account</span><i class="fas fa-arrow-right"></i></button>
-      <div id="regError" class="auth-error-msg"></div>
-      <div id="regSuccess" class="auth-success-msg"></div>
-    </form>
-    <div class="auth-divider"><span>Already registered?</span></div>
-    <button class="auth-alt-btn" onclick="showPage('loginPage')"><i class="fas fa-sign-in-alt"></i> Sign in instead</button>
-    <div class="auth-trust">
-      <span><i class="fas fa-lock"></i> 256-bit SSL</span>
-      <span><i class="fas fa-headset"></i> 24/7 Support</span>
-      <span><i class="fas fa-check-circle"></i> Verified</span>
+
+      <div class="ut-footer">Already registered? <span onclick="showPage('loginPage')">Log in</span></div>
+      <div class="ut-secure"><i class="fas fa-shield-alt"></i> Secure sign-up · Your data is protected</div>
     </div>
   </div>
-</div></div>
+</div>
 
 <!-- HOME -->
 <div id="homePage" class="page">
@@ -1660,11 +1107,11 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
   </div>
   <div class="form-card">
     <label class="field-label">Receiving Country</label>
-    <button class="auth-country" onclick="openCountryModal('withdraw')" style="margin-bottom:18px">
-      <span class="ac-flag" id="wdFlag">🇺🇬</span>
-      <span class="ac-name" id="wdName">Uganda</span>
-      <span class="ac-cur" id="wdCur">UGX</span>
-      <span class="ac-chev"><i class="fas fa-chevron-down"></i></span>
+    <button class="auth-country" onclick="openCountryModal('withdraw')" style="margin-bottom:18px; background:var(--bg-2); border:1.5px solid var(--line); color:#fff; border-radius:13px; padding:15px 16px; width:100%; display:flex; align-items:center; gap:12px;">
+      <span class="ac-flag" id="wdFlag" style="font-size:24px;">🇺🇬</span>
+      <span class="ac-name" id="wdName" style="flex:1; text-align:left; font-weight:700;">Uganda</span>
+      <span class="ac-cur" id="wdCur" style="font-size:10.5px; font-weight:800; color:var(--brand); background:rgba(0,212,160,.1); padding:5px 11px; border-radius:999px; border:1px solid rgba(0,212,160,.2);">UGX</span>
+      <span class="ac-chev" style="color:var(--ink-3); font-size:11px;"><i class="fas fa-chevron-down"></i></span>
     </button>
     <label class="field-label" for="wdAmount">Amount</label>
     <div class="input-wrap" id="wdAmountWrap"><span class="iw-prefix" id="wdPrefix">UGX</span><input type="number" id="wdAmount" placeholder="e.g. 20000" inputmode="numeric"></div>
@@ -2090,7 +1537,7 @@ const NETWORKS = {
   airtel: { name:'Airtel', prefixes:['75','74','73','70'],  display:['075','074','073','070'], placeholder:'075...', hint:'Airtel numbers start with 075, 074, 073, 070' }
 };
 
-const PASSWORD_RULES = { minLength: 8, requireLower: true, requireUpper: true, requireNumber: true, requireSymbol: true };
+const PASSWORD_RULES = { minLength: 6 };
 const EARNING_TX_TYPES = ['earning', 'referral_bonus', 'referral_bonus_l2', 'referral_bonus_l3', 'welcome_bonus', 'voucher'];
 
 const BUILT_IN_CARS = [
@@ -2438,34 +1885,39 @@ function selectCountry(code){
   const c = getCountry(code);
   if(pendingCountryTarget==='register'){
     selRegCountry = code;
-    document.getElementById('regFlag').textContent = c.flag;
-    document.getElementById('regName').textContent = c.name;
-    document.getElementById('regCur').textContent = c.currency;
-    document.getElementById('regPrefix').textContent = c.dial;
-    document.getElementById('regPhone').placeholder = c.ph;
+    const sel = document.getElementById('regCountrySelect');
+    if(sel) sel.value = code;
   } else if(pendingCountryTarget==='withdraw'){
     selWdCountry = code;
     loadWithdrawPage();
   } else if(pendingCountryTarget==='login'){
     selLoginCountry = code;
-    document.getElementById('loginPrefix').innerHTML = c.dial + ' <i class="fas fa-caret-down" style="font-size:10px;color:var(--ink-4)"></i>';
   }
   closeModal('countryModal');
+}
+
+function updateRegCountry(code){
+  selRegCountry = code;
 }
 
 function clearFieldErrors(ids){ ids.forEach(id=>{ const el=document.getElementById(id); if(el) el.classList.remove('has-error'); }); }
 function showFormError(id,msg){ const el=document.getElementById(id); if(!el)return; el.textContent=msg; el.style.display=msg?'block':'none'; }
 function hideFormError(id){ showFormError(id,''); }
 
-function togglePw(id){ const i=document.getElementById(id); i.type=i.type==='password'?'text':'password'; }
+function togglePw(id){ 
+  const i = document.getElementById(id); 
+  i.type = i.type === 'password' ? 'text' : 'password';
+  const icon = i.parentElement.querySelector('.ut-eye i');
+  if(icon) icon.className = i.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+}
 function validateRef(code){
   const el = document.getElementById('refCheck');
   if(!el)return;
   const c = String(code||'').trim().toUpperCase();
   if(!c){ el.textContent=''; return; }
   const u = STATE.users.find(x=>(x.referralCode||'').toUpperCase()===c);
-  if(u){ el.textContent='✓ Valid — referred by '+u.phone; el.style.color='var(--brand)'; }
-  else{ el.textContent='✗ Invalid code'; el.style.color='var(--rose)'; }
+  if(u){ el.textContent='✓ Valid — referred by '+u.phone; el.style.color='#00d4a0'; }
+  else{ el.textContent='✗ Invalid code'; el.style.color='#f43f5e'; }
 }
 function findUserByPhone(phone){
   const p = normPhone(phone);
@@ -2480,57 +1932,47 @@ function setButtonLoading(btn,loading,orig){
 
 function evaluatePassword(pw){
   const p = pw || '';
-  const checks = {
-    length: p.length >= PASSWORD_RULES.minLength,
-    lower: /[a-z]/.test(p),
-    upper: /[A-Z]/.test(p),
-    number: /[0-9]/.test(p),
-    symbol: /[^a-zA-Z0-9]/.test(p),
-    long: p.length >= 12
-  };
+  const checks = { length: p.length >= 6 };
   const passed = Object.values(checks).filter(Boolean).length;
   let level;
   if(p.length === 0) level = 'empty';
-  else if(p.length < 6 || passed <= 1) level = 'weak';
-  else if(passed <= 3) level = 'fair';
-  else if(checks.length && checks.lower && checks.upper && checks.number && checks.symbol){
-    level = checks.long ? 'strong' : 'good';
-  }
-  else level = 'fair';
+  else if(p.length < 6) level = 'weak';
+  else level = 'good';
   return { level, checks, passed };
 }
+
 function updateStrengthUI(evalResult){
   const bars = document.querySelectorAll('#pwBars .pw-strength-bar');
   const txt = document.getElementById('pwText');
   const reqs = document.getElementById('pwReqs');
+  
   const levelColors = {
-    empty: { bars: 0, cls: '', label: 'Use 8+ characters with letters, numbers & a symbol', tone: 'empty' },
-    weak:  { bars: 1, cls: 'on-weak',   label: 'Weak password — add more characters and variety',   tone: 'weak' },
-    fair:  { bars: 2, cls: 'on-fair',   label: 'Fair password — needs uppercase, number, or symbol', tone: 'fair' },
-    good:  { bars: 3, cls: 'on-good',   label: 'Good password — you can create your account',      tone: 'good' },
-    strong:{ bars: 4, cls: 'on-strong', label: 'Strong password — excellent!',                     tone: 'strong' }
+    empty: { bars: 0, cls: '', label: 'Use 6+ characters', tone: 'empty' },
+    weak:  { bars: 1, cls: 'on-weak',   label: 'Too short',   tone: 'weak' },
+    good:  { bars: 4, cls: 'on-good',   label: 'Looks good!', tone: 'good' }
   };
+  
   const lv = levelColors[evalResult.level];
-  bars.forEach((b,i)=>{ b.className = 'pw-strength-bar'; if(i<lv.bars) b.classList.add(lv.cls); });
-  txt.className = 'pw-strength-text '+lv.tone;
-  const icon = evalResult.level==='weak'?'exclamation-circle':evalResult.level==='fair'?'exclamation-triangle':evalResult.level==='good'?'check-circle':evalResult.level==='strong'?'shield-alt':'info-circle';
-  txt.innerHTML = '<i class="fas fa-'+icon+'"></i><span>'+lv.label+'</span>';
-  if(evalResult.level==='empty') reqs.classList.remove('show');
-  else reqs.classList.add('show');
-  reqs.querySelectorAll('.pw-req').forEach(el=>{
-    const met = evalResult.checks[el.dataset.req];
-    el.classList.toggle('met', !!met);
-    el.querySelector('i').className = met?'fas fa-check-circle':'fas fa-circle';
+  bars.forEach((b,i)=>{ 
+    b.className = 'pw-strength-bar'; 
+    b.style.background = i < lv.bars ? '#00d4a0' : '#1c2538'; 
   });
+  
+  txt.className = 'pw-strength-text '+lv.tone;
+  if (txt) {
+    const icon = evalResult.level === 'good' ? 'check-circle' : 'info-circle';
+    txt.innerHTML = '<i class="fas fa-'+icon+'"></i><span>'+lv.label+'</span>';
+    txt.style.color = evalResult.level === 'good' ? '#00d4a0' : '#7a8599';
+  }
+  if(reqs) reqs.style.display = 'none';
 }
+
 function updateSubmitState(){
   const btn = document.getElementById('regBtn');
   const pw = document.getElementById('regPw').value;
   const cf = document.getElementById('regConfirm').value;
-  const result = evaluatePassword(pw);
-  const strongEnough = result.level==='good'||result.level==='strong';
   const match = pw && cf && pw===cf;
-  btn.disabled = !(strongEnough && match);
+  btn.disabled = !(pw.length >= 6 && match);
 }
 function onPasswordInput(pw){
   updateStrengthUI(evaluatePassword(pw));
@@ -2541,54 +1983,53 @@ function onConfirmInput(){
   const pw = document.getElementById('regPw').value;
   const cf = document.getElementById('regConfirm').value;
   const hint = document.getElementById('confirmHint');
-  const wrap = document.getElementById('regConfirmWrap');
-  wrap.classList.remove('has-error','is-valid');
   if(!cf){ hint.textContent=''; updateSubmitState(); return; }
-  if(pw===cf){ wrap.classList.add('is-valid'); hint.textContent='✓ Passwords match'; hint.style.color='var(--brand)'; }
-  else{ wrap.classList.add('has-error'); hint.textContent='✗ Passwords do not match'; hint.style.color='var(--rose)'; }
+  if(pw===cf){ hint.textContent='✓ Passwords match'; hint.style.color='#00d4a0'; }
+  else{ hint.textContent='✗ Passwords do not match'; hint.style.color='#f43f5e'; }
   updateSubmitState();
 }
 
 async function handleRegister(){
+  const username = document.getElementById('regUsername').value.trim();
   const phone = normPhone(document.getElementById('regPhone').value);
   const pw = document.getElementById('regPw').value;
   const cf = document.getElementById('regConfirm').value;
   const ref = document.getElementById('regRef').value.trim().toUpperCase();
   const btn = document.getElementById('regBtn');
   hideFormError('regError');
-  clearFieldErrors(['regPhoneWrap','regPwWrap','regConfirmWrap','regRefWrap']);
+  
   const cInfo = getCountry(selRegCountry);
-  const pwResult = evaluatePassword(pw);
 
-  if(pwResult.level==='weak'){ showFormError('regError','Your password is too weak. Use 8+ characters with a mix of uppercase, lowercase, numbers, and symbols.'); return; }
-  if(pwResult.level==='fair'){ showFormError('regError','Your password is not strong enough. Add an uppercase letter, a number, and a symbol to make it Good or Strong.'); return; }
+  if(!username){ showFormError('regError','Username is required'); return; }
   if(!isValidPhone(phone,selRegCountry)){ showFormError('regError',cInfo.name+' phone must be '+cInfo.hint); return; }
+  if(pw.length < 6){ showFormError('regError','Password must be at least 6 characters'); return; }
   if(pw!==cf){ showFormError('regError','Passwords do not match'); return; }
   if(!ref){ showFormError('regError','Referral code is required'); return; }
+  
   const referrer = STATE.users.find(u=>(u.referralCode||'').toUpperCase()===ref);
   if(!referrer){ showFormError('regError','Invalid referral code'); return; }
   if(normPhone(referrer.phone)===phone){ showFormError('regError','You cannot use your own code'); return; }
   if(findUserByPhone(phone)){ showFormError('regError','Phone already registered'); return; }
 
-  setButtonLoading(btn,true,'<span>Create Account</span><i class="fas fa-arrow-right"></i>');
+  setButtonLoading(btn,true,'Register');
 
   let newCode;
   do { newCode = genCode(); } while (STATE.users.some(u => u.referralCode === newCode));
 
   const newU = {
-    id:genId('u'),phone,password:pw,country:selRegCountry,
-    balance:5000,wallet:0,isAdmin:false,referralCode:newCode,
-    referredBy:referrer.phone,totalDeposits:0,totalWithdrawn:0,
-    registrationDate:new Date().toISOString(),suspended:false,
-    lastBonusClaim:null,favorites:[]
+    id:genId('u'), username: username, phone:phone, password:pw, country:selRegCountry,
+    balance:5000, wallet:0, isAdmin:false, referralCode:newCode,
+    referredBy:referrer.phone, totalDeposits:0, totalWithdrawn:0,
+    registrationDate:new Date().toISOString(), suspended:false,
+    lastBonusClaim:null, favorites:[]
   };
   STATE.users.push(newU);
-  STATE.referrals.push({id:genId('ref'),referrerPhone:referrer.phone,refereePhone:phone,date:new Date().toISOString(),commission:0,hasRented:false,totalSpent:0});
-  STATE.transactions.push({id:genId('t'),phone,type:'welcome_bonus',amount:5000,description:'Welcome bonus',date:new Date().toISOString(),status:'completed'});
+  STATE.referrals.push({id:genId('ref'), referrerPhone:referrer.phone, refereePhone:phone, date:new Date().toISOString(), commission:0, hasRented:false, totalSpent:0});
+  STATE.transactions.push({id:genId('t'), phone, type:'welcome_bonus', amount:5000, description:'Welcome bonus', date:new Date().toISOString(), status:'completed'});
   debouncedSave();
 
   const ok = document.getElementById('regSuccess');
-  ok.textContent = '✓ Account created with a '+pwResult.level.toUpperCase()+' password! Redirecting...';
+  ok.textContent = '✓ Account created successfully! Redirecting...';
   ok.style.display = 'block';
   setTimeout(()=>{
     showPage('loginPage');
@@ -2598,9 +2039,9 @@ async function handleRegister(){
     document.getElementById('regPw').value='';
     document.getElementById('regConfirm').value='';
     document.getElementById('regRef').value='';
+    document.getElementById('regUsername').value='';
     document.getElementById('refCheck').textContent='';
     document.getElementById('confirmHint').textContent='';
-    updateStrengthUI(evaluatePassword(''));
     updateSubmitState();
   },1600);
 }
@@ -2611,17 +2052,15 @@ async function handleLogin(){
   const pw = document.getElementById('loginPassword').value;
   const btn = document.getElementById('loginBtn');
   hideFormError('loginError');
-  clearFieldErrors(['loginPhoneWrap','loginPwWrap']);
   if(!phone||!pw){ showFormError('loginError','Enter phone and password'); return; }
   const user = STATE.users.find(u=>normPhone(u.phone)===phone&&u.password===pw);
   if(!user){ showFormError('loginError','Invalid phone or password'); return; }
   if(user.suspended){ showSuspensionAlert(user); return; }
-  setButtonLoading(btn,true,'Sign In <i class="fas fa-arrow-right"></i>');
+  setButtonLoading(btn,true,'Login');
   if(!user.country) user.country = CONFIG.DEFAULT_COUNTRY;
   if(typeof user.wallet!=='number') user.wallet = 0;
   if(!user.favorites) user.favorites = [];
-  if(document.getElementById('rememberMe').checked) sessionSave(SS_REMEMBER,phoneRaw);
-  else sessionRemove(SS_REMEMBER);
+  
   sessionSave(SS_CURRENT,user);
   currentUser = user;
   setTimeout(()=>{ 
@@ -2686,8 +2125,13 @@ function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const pg = document.getElementById(id);
   if(pg) pg.classList.add('active');
-  if(id==='loginPage'||id==='registerPage'||id==='adminPage') document.getElementById('bottomNav').style.display='none';
-  else if(currentUser&&!currentUser.isAdmin){ document.getElementById('bottomNav').style.display='flex'; updateNav(id); }
+  
+  if(id==='loginPage'||id==='registerPage'||id==='adminPage') {
+    document.getElementById('bottomNav').style.display='none';
+  } else if(currentUser&&!currentUser.isAdmin){ 
+    document.getElementById('bottomNav').style.display='flex'; updateNav(id); 
+  }
+  
   if(id==='homePage'){ loadHome(); initHeroCarousel(); }
   if(id==='carsPage') loadCars();
   if(id==='myCarsPage') loadMyCars();
@@ -2831,7 +2275,7 @@ function showNextWithdrawToast(){
 function loadHome(){
   if(!currentUser) return;
   const phone = normPhone(currentUser.phone);
-  document.getElementById('homeName').textContent = currentUser.phone;
+  document.getElementById('homeName').textContent = currentUser.username || currentUser.phone;
   document.getElementById('homeAvatar').textContent = currentUser.phone.slice(-2);
   const txns = STATE.transactions.filter(t=>normPhone(t.phone)===phone);
   const earn = txns.filter(t => EARNING_TX_TYPES.includes(t.type) && t.status === 'completed').reduce((s,t) => s + toNum(t.amount), 0);
@@ -3116,7 +2560,7 @@ function performClaim(){
 function loadProfile(){
   if(!currentUser) return;
   document.getElementById('profAvatar').textContent = currentUser.phone.slice(-2);
-  document.getElementById('profName').textContent = 'Investor '+currentUser.phone.slice(-4);
+  document.getElementById('profName').textContent = currentUser.username || ('Investor '+currentUser.phone.slice(-4));
   document.getElementById('profPhone').textContent = currentUser.phone;
   document.getElementById('profCountry').textContent = getCountry(currentUser.country||CONFIG.DEFAULT_COUNTRY).name+' ('+userCurrency(currentUser)+')';
 }
@@ -3765,7 +3209,7 @@ function renderAdminUsers(){
     const suspBlock = (u.suspended && u.suspensionReason)
       ? '<div style="margin-top:8px;padding:9px 11px;background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);border-radius:9px;font-size:11px;color:#fca5a5;line-height:1.5;font-weight:600"><i class="fas fa-info-circle" style="color:var(--rose)"></i> '+esc(u.suspensionReason)+'</div>'
       : '';
-    return '<div class="admin-user"><div class="au-info"><div class="au-phone"><i class="fas fa-mobile-alt"></i> '+esc(u.phone)+(badges.length?' '+badges.join(' '):'')+'</div><div class="au-meta">'+c.flag+' '+esc(c.name)+' ('+c.currency+')<br>Deposit: '+c.currency+' '+toNum(u.wallet).toLocaleString()+' · Earnings: '+c.currency+' '+toNum(u.balance).toLocaleString()+'</div>'+suspBlock+'</div><div class="au-actions"><button class="au-btn add" onclick="adminAddToUser(\''+u.phone+'\')" title="Add"><i class="fas fa-plus"></i></button><button class="au-btn reset" onclick="adminResetPw(\''+u.phone+'\')" title="Reset"><i class="fas fa-key"></i></button><button class="au-btn reply" onclick="adminReplyTo(\''+u.phone+'\')" title="Reply"><i class="fas fa-comment"></i></button><button class="au-btn impersonate" onclick="adminImpersonate(\''+u.phone+'\')" title="Login as"><i class="fas fa-user"></i></button>'+(u.suspended?'<button class="au-btn unsuspend" onclick="adminUnsuspend(\''+u.phone+'\')" title="Unsuspend"><i class="fas fa-check"></i></button>':'<button class="au-btn suspend" onclick="adminSuspend(\''+u.phone+'\')" title="Suspend"><i class="fas fa-ban"></i></button>')+'<button class="au-btn delete" onclick="adminDeleteUser(\''+u.phone+'\')" title="Delete"><i class="fas fa-trash"></i></button></div></div>';
+    return '<div class="admin-user"><div class="au-info"><div class="au-phone"><i class="fas fa-mobile-alt"></i> '+esc(u.phone)+' '+(u.username?'('+esc(u.username)+')':'')+(badges.length?' '+badges.join(' '):'')+'</div><div class="au-meta">'+c.flag+' '+esc(c.name)+' ('+c.currency+')<br>Deposit: '+c.currency+' '+toNum(u.wallet).toLocaleString()+' · Earnings: '+c.currency+' '+toNum(u.balance).toLocaleString()+'</div>'+suspBlock+'</div><div class="au-actions"><button class="au-btn add" onclick="adminAddToUser(\''+u.phone+'\')" title="Add"><i class="fas fa-plus"></i></button><button class="au-btn reset" onclick="adminResetPw(\''+u.phone+'\')" title="Reset"><i class="fas fa-key"></i></button><button class="au-btn reply" onclick="adminReplyTo(\''+u.phone+'\')" title="Reply"><i class="fas fa-comment"></i></button><button class="au-btn impersonate" onclick="adminImpersonate(\''+u.phone+'\')" title="Login as"><i class="fas fa-user"></i></button>'+(u.suspended?'<button class="au-btn unsuspend" onclick="adminUnsuspend(\''+u.phone+'\')" title="Unsuspend"><i class="fas fa-check"></i></button>':'<button class="au-btn suspend" onclick="adminSuspend(\''+u.phone+'\')" title="Suspend"><i class="fas fa-ban"></i></button>')+'<button class="au-btn delete" onclick="adminDeleteUser(\''+u.phone+'\')" title="Delete"><i class="fas fa-trash"></i></button></div></div>';
   }).join('');
 }
 function renderAdminWd(){
@@ -4376,7 +3820,7 @@ async function init(){
   if(refParam){ const i = document.getElementById('regRef'); if(i){ i.value = refParam; validateRef(refParam); } }
 
   const remembered = sessionLoad(SS_REMEMBER);
-  if(remembered){ document.getElementById('loginPhone').value = remembered; document.getElementById('rememberMe').checked = true; }
+  if(remembered){ document.getElementById('loginPhone').value = remembered; }
 
   const saved = sessionLoad(SS_CURRENT);
   if(saved && saved.phone){
