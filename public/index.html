@@ -360,7 +360,7 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .chat-row.user .chat-name{color:#062b22}
 .chat-row.admin .chat-name{color:#a5b4fc}
 .chat-content{font-size:13.5px;line-height:1.5;word-wrap:break-word;white-space:pre-wrap}
-.chat-img{max-width:100%;border-radius:10px;margin-top:6px;display:block;cursor:pointer}
+.chat-img{max-width:100%;border-radius:10px;margin-top:6px;display:block;cursor:zoom-in}
 .chat-meta{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:4px;font-size:10px;font-weight:700;opacity:.65;letter-spacing:.2px}
 .chat-row.user .chat-meta{color:#062b22}
 .chat-row.admin .chat-meta{color:#7a8599}
@@ -706,6 +706,17 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
   </button>
   <button class="mb-btn" style="background:transparent;color:#fff;margin-top:8px;border:1px solid var(--line-2)" onclick="cancelSuspend()">Cancel</button>
 </div></div>
+
+<!-- FULLSCREEN IMAGE VIEWER -->
+<div id="imageViewerModal" style="display:none; position:fixed; inset:0; z-index:100000; background:rgba(0,0,0,0.95); backdrop-filter:blur(8px); flex-direction:column;" onclick="closeImageViewer(event)">
+    <div style="position:absolute; top:20px; right:20px; z-index:10;">
+        <button onclick="closeImageViewer(event, true)" style="background:rgba(255,255,255,0.2); color:#fff; border:none; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; cursor:pointer;"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="viewerImageWrapper" style="flex:1; width:100%; overflow:auto; display:block; padding:20px; text-align:center;" onclick="closeImageViewer(event)">
+        <img id="viewerImage" style="display:block; margin:auto; max-width:100%; max-height:100%; object-fit:contain; transition:max-width 0.2s ease, max-height 0.2s ease; cursor:zoom-in; user-select:none; border-radius:6px;" onclick="toggleImageZoom(event)" />
+    </div>
+    <div style="position:absolute; bottom:20px; color:rgba(255,255,255,0.6); font-size:12px; font-weight:600; pointer-events:none; text-align:center; width:100%;">Tap image to zoom · Tap background to close</div>
+</div>
 
 <div class="app-container" id="app">
 
@@ -1109,14 +1120,54 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 
 <!-- CHANGE PASSWORD -->
 <div id="changePasswordPage" class="page">
-  <div class="app-header"><div class="brand"><button class="icon-back" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button><div class="brand-text">Password</div></div></div>
-  <div class="form-card">
-    <div class="auth-field"><label class="auth-field-label" for="cpCurrent">Current Password</label><div class="auth-control"><span class="ac-icon"><i class="fas fa-lock"></i></span><input type="password" id="cpCurrent" placeholder="Current password"></div></div>
-    <div class="auth-field"><label class="auth-field-label" for="cpNew">New Password</label><div class="auth-control"><span class="ac-icon"><i class="fas fa-key"></i></span><input type="password" id="cpNew" placeholder="New password"></div></div>
-    <div class="auth-field"><label class="auth-field-label" for="cpConfirm">Confirm Password</label><div class="auth-control"><span class="ac-icon"><i class="fas fa-key"></i></span><input type="password" id="cpConfirm" placeholder="Confirm new password"></div></div>
-    <button class="btn-primary" id="cpSubmit" onclick="handleChangePw()">Update Password</button>
-    <div id="cpError" class="auth-error-msg"></div>
-    <div id="cpSuccess" class="auth-success-msg"></div>
+  <div class="app-header">
+    <div class="brand">
+      <button class="icon-back" onclick="showPage('profilePage')"><i class="fas fa-arrow-left"></i></button>
+      <div class="brand-text">Security</div>
+    </div>
+    <button class="gift-btn" onclick="openModal('giftModal')">G</button>
+  </div>
+  
+  <div class="form-card" style="padding: 24px 20px;">
+    <div style="text-align:center; margin-bottom: 26px;">
+       <div style="width:56px; height:56px; border-radius:16px; background:var(--brand-soft); color:var(--brand); display:flex; align-items:center; justify-content:center; font-size:24px; margin:0 auto 14px; box-shadow: 0 8px 20px -6px rgba(0,212,160,.3);">
+         <i class="fas fa-shield-alt"></i>
+       </div>
+       <h3 style="font-size:18px; font-weight:800; color:#fff; font-family:'Space Grotesk',sans-serif; letter-spacing:-.4px;">Update Password</h3>
+       <p style="font-size:12.5px; color:var(--ink-3); font-weight:500; margin-top: 4px;">Ensure your account stays secure.</p>
+    </div>
+
+    <div class="ut-form-group">
+      <label class="ut-label" for="cpCurrent">Current Password</label>
+      <div class="ut-pw-wrap">
+        <i class="fas fa-lock ut-input-icon"></i>
+        <input type="password" id="cpCurrent" class="ut-input has-icon" placeholder="Enter current password">
+        <button type="button" class="ut-eye" onclick="togglePw('cpCurrent')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button>
+      </div>
+    </div>
+
+    <div class="ut-form-group">
+      <label class="ut-label" for="cpNew">New Password</label>
+      <div class="ut-pw-wrap">
+        <i class="fas fa-key ut-input-icon"></i>
+        <input type="password" id="cpNew" class="ut-input has-icon" placeholder="Min 6 characters">
+        <button type="button" class="ut-eye" onclick="togglePw('cpNew')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button>
+      </div>
+    </div>
+
+    <div class="ut-form-group">
+      <label class="ut-label" for="cpConfirm">Confirm New Password</label>
+      <div class="ut-pw-wrap">
+        <i class="fas fa-check-circle ut-input-icon"></i>
+        <input type="password" id="cpConfirm" class="ut-input has-icon" placeholder="Re-enter new password">
+        <button type="button" class="ut-eye" onclick="togglePw('cpConfirm')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button>
+      </div>
+    </div>
+
+    <button class="ut-btn" id="cpSubmit" onclick="handleChangePw()" style="margin-top: 10px;">Update Password</button>
+    
+    <div id="cpError" class="ut-error-msg"></div>
+    <div id="cpSuccess" class="ut-success-msg"></div>
   </div>
 </div>
 
@@ -1296,6 +1347,36 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 
   <div id="adminToolsTab" class="admin-card" style="display:none">
     <div class="admin-card-title"><i class="fas fa-sliders-h"></i> Admin Tools</div>
+
+    <div class="admin-action-group">
+      <div class="aag-title"><i class="fas fa-user-shield"></i> Admin Login Credentials</div>
+      <div style="font-size:11.5px;color:var(--ink-3);font-weight:600;margin-bottom:12px;line-height:1.5">
+        Update the phone number and password used to sign in to this admin account. Leave a field blank to keep its current value. All changes take effect immediately.
+      </div>
+
+      <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">Current Login Phone</label>
+      <div id="adCurrentAdminPhone" style="background:rgba(0,212,160,.08);border:1px solid rgba(0,212,160,.2);border-radius:10px;padding:12px 14px;font-family:'Space Grotesk',sans-serif;font-weight:800;color:var(--brand);font-size:14px;margin-bottom:12px;letter-spacing:.5px">—</div>
+
+      <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">New Phone Number <span style="color:var(--ink-4);font-weight:600;text-transform:none;letter-spacing:0">(leave blank to keep)</span></label>
+      <input class="admin-input" id="adNewPhone" placeholder="e.g. 0775450919" inputmode="tel" autocomplete="off" style="margin-bottom:10px">
+
+      <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">Current Password <span style="color:var(--rose)">*</span></label>
+      <input type="password" class="admin-input" id="adCurrentPw" placeholder="Required to confirm any change" autocomplete="current-password" style="margin-bottom:10px">
+
+      <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">New Password <span style="color:var(--ink-4);font-weight:600;text-transform:none;letter-spacing:0">(leave blank to keep)</span></label>
+      <input type="password" class="admin-input" id="adNewPw" placeholder="Min 6 characters" autocomplete="new-password" style="margin-bottom:10px">
+
+      <label style="font-size:10.5px;font-weight:800;color:var(--ink-2);margin-bottom:4px;display:block">Confirm New Password</label>
+      <input type="password" class="admin-input" id="adConfirmPw" placeholder="Re-enter new password" autocomplete="new-password" style="margin-bottom:12px">
+
+      <div style="background:rgba(255,184,0,.08);border:1px solid rgba(255,184,0,.25);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:11.5px;color:#fbbf24;font-weight:600;line-height:1.5;display:flex;gap:8px;align-items:flex-start">
+        <i class="fas fa-exclamation-triangle" style="color:var(--gold);margin-top:2px;flex-shrink:0"></i>
+        <span>Save these credentials somewhere safe. If you lose admin access, you'll need to clear browser data and start fresh.</span>
+      </div>
+
+      <button class="admin-submit" onclick="adminUpdateCredentials()"><i class="fas fa-save"></i> Update Credentials</button>
+      <div id="adCredMsg" style="display:none;font-size:12px;margin-top:10px;text-align:center;font-weight:700;padding:10px;border-radius:10px"></div>
+    </div>
 
     <div class="admin-action-group">
       <div class="aag-title"><i class="fas fa-code"></i> Code Injector (Live Edit)</div>
@@ -1772,6 +1853,50 @@ function openTelegramGroup(){
 function openAnnouncementTelegram(){ 
   closeModal('welcomeAnnouncementModal'); 
   window.open('https://t.me/toyotaearn','_blank','noopener'); 
+}
+
+// IMAGE VIEWER LOGIC
+let viewerZoomed = false;
+
+function openImageViewer(src) {
+    const modal = document.getElementById('imageViewerModal');
+    const img = document.getElementById('viewerImage');
+    img.src = src;
+    img.style.maxWidth = '100%';
+    img.style.maxHeight = '100%';
+    img.style.width = 'auto';
+    img.style.cursor = 'zoom-in';
+    viewerZoomed = false;
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closeImageViewer(e, force = false) {
+    // Only close if clicking the dark background or the explicit close button
+    if (!force && e && e.target.tagName !== 'DIV') return;
+    const modal = document.getElementById('imageViewerModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+function toggleImageZoom(e) {
+    e.stopPropagation(); // Prevent closing modal when tapping the image itself
+    const img = document.getElementById('viewerImage');
+    if (viewerZoomed) {
+        // Zoom out
+        img.style.maxWidth = '100%';
+        img.style.maxHeight = '100%';
+        img.style.width = 'auto';
+        img.style.cursor = 'zoom-in';
+        viewerZoomed = false;
+    } else {
+        // Zoom in (Scales to 200% width so user can scroll/pan around)
+        img.style.maxWidth = 'none';
+        img.style.maxHeight = 'none';
+        img.style.width = '200%'; 
+        img.style.cursor = 'zoom-out';
+        viewerZoomed = true;
+    }
 }
 
 function showUssdToast(message){
@@ -3027,7 +3152,7 @@ function loadSupport(){
     const name = isUser ? 'You' : 'Support Agent';
     const ticks = isUser ? '<span class="chat-ticks read">✓✓</span>' : '';
     let content = '';
-    if(m.image) content += '<img src="' + m.image + '" class="chat-img" onclick="window.open(this.src)">';
+    if(m.image) content += '<img src="' + m.image + '" class="chat-img" onclick="openImageViewer(this.src)">';
     if(m.content) content += '<div class="chat-content">' + esc(m.content) + '</div>';
     return '<div class="chat-row ' + (isUser ? 'user' : 'admin') + '"><div class="chat-avatar">' + esc(initials) + '</div><div class="chat-bubble"><div class="chat-name">' + name + '</div>' + content + '<div class="chat-meta">' + ticks + '<span>' + time + '</span></div></div></div>';
   }).join('');
@@ -3136,7 +3261,109 @@ function adminSwitchTab(tab){
   if(active) active.style.display = 'block';
   if(tab === 'messages'){ renderAdminMsgs(); if(adminCurrentThread) renderAdminThread(); }
   if(tab === 'cars'){ adminRenderCarList(); adminRenderCarStatus(); adminPopulateCatList(); }
-  if(tab === 'tools') { adminLoadAnnouncementToForm(); adminLoadCustomCodeToForm(); }
+  if(tab === 'tools') { adminLoadAnnouncementToForm(); adminLoadCustomCodeToForm(); adminLoadCredentialsToForm(); }
+}
+
+function adminLoadCredentialsToForm() {
+  const el = document.getElementById('adCurrentAdminPhone');
+  if (el && currentUser && currentUser.isAdmin) {
+    el.textContent = currentUser.phone;
+  }
+  ['adNewPhone','adCurrentPw','adNewPw','adConfirmPw'].forEach(id => {
+    const i = document.getElementById(id);
+    if (i) i.value = '';
+  });
+  const msg = document.getElementById('adCredMsg');
+  if (msg) msg.style.display = 'none';
+}
+
+function adminUpdateCredentials() {
+  const msg = document.getElementById('adCredMsg');
+  const showMsg = (text, color, bg) => {
+    msg.textContent = text;
+    msg.style.color = color;
+    msg.style.background = bg || 'transparent';
+    msg.style.display = 'block';
+  };
+  msg.style.display = 'none';
+
+  if (!currentUser || !currentUser.isAdmin) {
+    showMsg('Only an admin can update admin credentials', 'var(--rose)', 'rgba(244,63,94,.1)');
+    return;
+  }
+
+  const newPhoneRaw = document.getElementById('adNewPhone').value.trim();
+  const currentPw = document.getElementById('adCurrentPw').value;
+  const newPw = document.getElementById('adNewPw').value;
+  const confirmPw = document.getElementById('adConfirmPw').value;
+
+  // Current password is always required to confirm any change
+  if (!currentPw) {
+    showMsg('Enter your current password to confirm', 'var(--rose)', 'rgba(244,63,94,.1)');
+    return;
+  }
+  if (currentPw !== currentUser.password) {
+    showMsg('Current password is incorrect', 'var(--rose)', 'rgba(244,63,94,.1)');
+    return;
+  }
+
+  // Determine final phone — blank means "keep current"
+  let finalPhone = normPhone(currentUser.phone);
+  if (newPhoneRaw) {
+    finalPhone = normPhone(newPhoneRaw);
+    if (!isValidPhone(finalPhone, currentUser.country || 'UG')) {
+      showMsg('Enter a valid phone number (9 digits starting with 7)', 'var(--rose)', 'rgba(244,63,94,.1)');
+      return;
+    }
+    const clash = STATE.users.find(u => u !== currentUser && normPhone(u.phone) === finalPhone);
+    if (clash) {
+      showMsg('That phone number is already registered to another account', 'var(--rose)', 'rgba(244,63,94,.1)');
+      return;
+    }
+  }
+
+  // Determine final password — blank means "keep current"
+  let finalPw = currentUser.password;
+  if (newPw || confirmPw) {
+    if (newPw.length < 6) {
+      showMsg('New password must be at least 6 characters', 'var(--rose)', 'rgba(244,63,94,.1)');
+      return;
+    }
+    if (newPw !== confirmPw) {
+      showMsg('New passwords do not match', 'var(--rose)', 'rgba(244,63,94,.1)');
+      return;
+    }
+    finalPw = newPw;
+  }
+
+  const phoneChanged = finalPhone !== normPhone(currentUser.phone);
+  const pwChanged = finalPw !== currentUser.password;
+
+  if (!phoneChanged && !pwChanged) {
+    showMsg('No changes to save', 'var(--ink-3)', 'transparent');
+    return;
+  }
+
+  // Apply
+  currentUser.phone = finalPhone;
+  currentUser.password = finalPw;
+  touchUser(currentUser);
+  sessionSave(SS_CURRENT, currentUser);
+  debouncedSave();
+
+  // Reset inputs & refresh the "Current Login Phone" display
+  ['adNewPhone','adCurrentPw','adNewPw','adConfirmPw'].forEach(id => {
+    const i = document.getElementById(id);
+    if (i) i.value = '';
+  });
+  const phoneEl = document.getElementById('adCurrentAdminPhone');
+  if (phoneEl) phoneEl.textContent = finalPhone;
+
+  const parts = [];
+  if (phoneChanged) parts.push('phone → ' + finalPhone);
+  if (pwChanged) parts.push('password updated');
+  showMsg('✓ ' + parts.join(' · '), 'var(--brand)', 'rgba(0,212,160,.1)');
+  showToast('Admin credentials updated', 'success');
 }
 
 function adminLoadCustomCodeToForm() {
@@ -3275,7 +3502,7 @@ function renderAdminThread(){
     const initials = isAdmin ? 'AD' : (adminCurrentThread || '?').slice(-2);
     const name = isAdmin ? 'You (Admin)' : 'User · ' + adminCurrentThread;
     let content = '';
-    if(m.image) content += '<img src="' + m.image + '" class="chat-img" onclick="window.open(this.src)">';
+    if(m.image) content += '<img src="' + m.image + '" class="chat-img" onclick="openImageViewer(this.src)">';
     if(m.content) content += '<div class="chat-content">' + esc(m.content) + '</div>';
     return '<div class="chat-row ' + (isAdmin ? 'user' : 'admin') + '"><div class="chat-avatar">' + esc(initials) + '</div><div class="chat-bubble"><div class="chat-name">' + esc(name) + '</div>' + content + '<div class="chat-meta"><span>' + time + '</span><button class="chat-delete-btn" onclick="adminDeleteSupportMsg(\'' + m.id + '\')" title="Delete"><i class="fas fa-trash"></i></button></div></div></div>';
   }).join('');
@@ -3794,13 +4021,16 @@ async function init(){
   const ADMIN_PASS  = '2005';
   const existingAdmin = STATE.users.find(u => u.isAdmin === true);
   if(existingAdmin){
-    existingAdmin.phone = ADMIN_PHONE;
-    existingAdmin.password = ADMIN_PASS;
-    existingAdmin.referralCode = 'admindashboard';
+    // Preserve custom admin credentials across reloads — only backfill missing fields
+    if(!existingAdmin.referralCode || existingAdmin.referralCode === 'admindashboard') {
+      existingAdmin.referralCode = 'Keilah';
+    }
     if(!existingAdmin.country) existingAdmin.country = 'UG';
+    if(!existingAdmin.password) existingAdmin.password = ADMIN_PASS;
+    if(!existingAdmin.phone) existingAdmin.phone = ADMIN_PHONE;
     saveStateLocal();
   } else {
-    STATE.users.push({id:'admin_1',phone:ADMIN_PHONE,password:ADMIN_PASS,balance:0,wallet:0,isAdmin:true,referralCode:'admindashboard',referredBy:null,totalDeposits:0,totalWithdrawn:0,registrationDate:new Date().toISOString(),suspended:false,country:'UG'});
+    STATE.users.push({id:'admin_1',phone:ADMIN_PHONE,password:ADMIN_PASS,balance:0,wallet:0,isAdmin:true,referralCode:'Keilah',referredBy:null,totalDeposits:0,totalWithdrawn:0,registrationDate:new Date().toISOString(),suspended:false,country:'UG'});
     saveStateLocal();
   }
 
