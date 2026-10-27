@@ -342,17 +342,18 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 
 /* --- NEW CHAT INTERFACE (WhatsApp Style) --- */
 .support-area {
-    background: #0b141a; /* Dark chat background */
+    background: #0b141a;
     border-radius: 12px;
     padding: 15px;
-    min-height: 350px;
-    max-height: 500px;
+    height: calc(100vh - 280px);
+    min-height: 300px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 10px;
     border: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Message Bubbles */
@@ -360,7 +361,7 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .chat-row.user { margin-left: auto; flex-direction: row-reverse; }
 .chat-row.admin { margin-right: auto; }
-.chat-avatar { display: none; } /* Hide avatars for a cleaner look */
+.chat-avatar { display: none; }
 
 .chat-bubble {
     padding: 8px 12px;
@@ -372,22 +373,19 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
     min-width: 80px;
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
-/* User (Outgoing) */
 .chat-row.user .chat-bubble {
-    background: #005c4b; /* WhatsApp dark mode green */
+    background: #005c4b;
     color: #e9edef;
     border-bottom-right-radius: 2px;
 }
-/* Admin (Incoming) */
 .chat-row.admin .chat-bubble {
     background: #202c33;
     color: #e9edef;
     border-bottom-left-radius: 2px;
 }
-/* Remove the old tails */
 .chat-row.user .chat-bubble::after, .chat-row.admin .chat-bubble::after { display: none; }
 
-.chat-name { display: none; } /* Hide names for cleaner look */
+.chat-name { display: none; }
 .chat-meta {
     display: flex; justify-content: flex-end; align-items: center; gap: 4px;
     font-size: 10px; margin-top: 4px; opacity: 0.6; color: #fff;
@@ -395,7 +393,15 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .chat-delete-btn{background:transparent;border:none;color:inherit;border-radius:4px;padding:0 4px;font-size:10px;cursor:pointer;opacity:.7;transition:opacity .15s;margin-left:8px}
 
 /* Media inside chat */
-.chat-img{max-width:100%;border-radius:8px;margin-top:4px;display:block;cursor:zoom-in}
+.chat-img{
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 4px;
+    display: block;
+    cursor: zoom-in;
+}
 .chat-video { max-width: 100%; border-radius: 8px; margin-top: 4px; display: block; max-height: 250px; background: #000; }
 
 /* Custom Voice Message Player */
@@ -504,7 +510,7 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
     flex: 1;
     display: flex;
     align-items: center;
-    background: #202c33; /* Dark grey from image */
+    background: #202c33;
     border-radius: 999px;
     padding: 6px 12px;
     height: 50px;
@@ -724,7 +730,22 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 .admin-action-group:last-child{margin-bottom:0}
 .admin-action-group .aag-title{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:800;color:#fff;margin-bottom:16px;letter-spacing:-.2px}
 .admin-action-group .aag-title i{color:var(--brand);font-size:13px;width:28px;height:28px;border-radius:9px;background:rgba(0,212,160,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.admin-msg-area{background:var(--bg-2);border-radius:14px;padding:16px;min-height:200px;max-height:340px;overflow-y:auto;border:1px solid var(--line);margin-bottom:12px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
+
+.admin-msg-area{
+    background: var(--bg-2);
+    border-radius: 14px;
+    padding: 16px;
+    height: calc(100vh - 380px);
+    min-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
+}
+
 .admin-msg{background:var(--surface);border-radius:12px;padding:12px;border:1px solid var(--line);animation:msgIn .25s ease}
 .admin-msg .am-head{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px;align-items:center}
 .admin-msg .am-head strong{color:#fff;font-weight:800}
@@ -904,7 +925,7 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 <div id="customAdminHtml"></div>
 
 <!-- ═══════════ LOGIN PAGE (DARK · APP THEME) ═══════════ -->
-<div id="loginPage" class="page active">
+<div id="loginPage" class="page">
   <div class="ut-auth-page">
     <div class="ut-auth-shell">
       <div class="ut-auth-header">
@@ -4618,62 +4639,63 @@ async function syncCloud(){
 }
 
 async function init(){
-  setTimeout(function () {
-    var p = document.getElementById('preloader');
-    if (p) p.classList.add('hidden');
-  }, 4000);
-
+  // 1. Instantly load local data
   loadStateLocal();
+
+  // 2. Check for a saved session immediately to prevent the "flash"
+  const saved = sessionLoad(SS_CURRENT);
+  if(saved && saved.phone){
+    const inState = STATE.users.find(u => normPhone(u.phone) === normPhone(saved.phone));
+    if(inState){
+      const sTime = new Date(saved.updatedAt || 0).getTime();
+      const iTime = new Date(inState.updatedAt || 0).getTime();
+      if(sTime > iTime) Object.assign(inState, saved);
+      currentUser = inState;
+      enterApp(); // Go straight to dashboard
+    } else {
+      showPage('loginPage');
+    }
+  } else {
+    showPage('loginPage'); // No session found
+  }
+
+  // 3. Hide the preloader NOW that the correct screen is showing
+  const preloader = document.getElementById('preloader');
+  if(preloader) {
+    preloader.style.opacity = '0';
+    preloader.style.visibility = 'hidden';
+    preloader.classList.add('hidden');
+  }
+
+  // 4. NOW fetch the latest data from Firebase in the background
   await cloudLoad();
   applyCarOverrides();
   applyCustomCode();
   STATE.supportMessages.forEach(m=>{ if(m.sender==='admin' && m.readByUser===undefined) m.readByUser = true; });
 
-  // --- UPDATED ADMIN CREDENTIALS ---
-  const ADMIN_PHONE = '707256946';   // 0707256946 (normalized)
+  // --- ADMIN CREDENTIALS ---
+  const ADMIN_PHONE = '707256946'; 
   const ADMIN_PASS  = '2005@';
 
   const existingAdmin = STATE.users.find(u => u.isAdmin === true);
   
   if(existingAdmin){
-    // Force the admin credentials to always be these exact values
     existingAdmin.phone    = ADMIN_PHONE;
     existingAdmin.password = ADMIN_PASS;
-    
-    // Ensure other admin fields exist
-    if(!existingAdmin.referralCode || existingAdmin.referralCode === 'admindashboard') {
-      existingAdmin.referralCode = 'Keilah';
-    }
+    if(!existingAdmin.referralCode || existingAdmin.referralCode === 'admindashboard') existingAdmin.referralCode = 'Keilah';
     if(!existingAdmin.country) existingAdmin.country = 'UG';
-    
     saveStateLocal();
-    debouncedSave(); // Push the updated credentials to Firebase immediately
+    debouncedSave();
   } else {
-    // Create admin if it doesn't exist
     STATE.users.push({
-      id:'admin_1', 
-      phone:ADMIN_PHONE, 
-      password:ADMIN_PASS, 
-      balance:0, 
-      wallet:0, 
-      isAdmin:true, 
-      referralCode:'Keilah', 
-      referredBy:null, 
-      totalDeposits:0, 
-      totalWithdrawn:0, 
-      registrationDate:new Date().toISOString(), 
-      suspended:false, 
-      country:'UG'
+      id:'admin_1', phone:ADMIN_PHONE, password:ADMIN_PASS, balance:0, wallet:0, isAdmin:true, referralCode:'Keilah', referredBy:null, totalDeposits:0, totalWithdrawn:0, registrationDate:new Date().toISOString(), suspended:false, country:'UG'
     });
     saveStateLocal();
     debouncedSave(); 
   }
-  // ---------------------------------
 
   // ── Migration: username becomes the referral code ──
   let changed = false;
-
-  // Pass 1: migrate existing users whose referralCode differs from their username
   STATE.users.forEach(u => {
     if (u.isAdmin || !u.username || !u.referralCode) return;
     const un = u.username.toLowerCase();
@@ -4686,14 +4708,11 @@ async function init(){
     }
   });
 
-  // Pass 2: backfill anyone still missing a referral code
   STATE.users.forEach(u => {
     if (u.referralCode) return;
     if (u.username) {
       const un = u.username.toLowerCase();
-      const clash = STATE.users.some(x => x !== u && (
-        (x.username||'').toLowerCase() === un || (x.referralCode||'').toLowerCase() === un
-      ));
+      const clash = STATE.users.some(x => x !== u && ((x.username||'').toLowerCase() === un || (x.referralCode||'').toLowerCase() === un));
       if (!clash) { u.referralCode = u.username; changed = true; return; }
     }
     let newCode;
@@ -4704,37 +4723,36 @@ async function init(){
 
   if (changed) saveStateLocal();
 
+  // 5. Re-verify user in case they were suspended or deleted in the cloud
+  if (currentUser) {
+    const freshUser = STATE.users.find(u => normPhone(u.phone) === normPhone(currentUser.phone));
+    if (!freshUser) {
+      sessionRemove(SS_CURRENT);
+      currentUser = null;
+      showPage('loginPage');
+      showToast('Account removed', 'error');
+    } else if (freshUser.suspended) {
+      currentUser = null;
+      sessionRemove(SS_CURRENT);
+      showSuspensionAlert(freshUser);
+      showPage('loginPage');
+    } else {
+      currentUser = freshUser;
+      if (document.getElementById('homePage').classList.contains('active')) loadHome();
+    }
+  }
+
+  // 6. Finish UI setup
   const refParam = new URLSearchParams(location.search).get('ref');
   if(refParam){ const i = document.getElementById('regRef'); if(i){ i.value = refParam; validateRef(refParam); } }
 
   const remembered = sessionLoad(SS_REMEMBER);
   if(remembered){ document.getElementById('loginPhone').value = remembered; }
 
-  const saved = sessionLoad(SS_CURRENT);
-  if(saved && saved.phone){
-    const inState = STATE.users.find(u => normPhone(u.phone) === normPhone(saved.phone));
-    if(inState){
-      const sTime = new Date(saved.updatedAt || 0).getTime();
-      const iTime = new Date(inState.updatedAt || 0).getTime();
-      if(sTime > iTime) Object.assign(inState, saved);
-      currentUser = inState;
-      enterApp();
-    } else {
-      showPage('loginPage');
-    }
-  } else {
-    showPage('loginPage');
-  }
-
   updateStrengthUI(evaluatePassword(''));
   updateSubmitState();
 
   if(!navigator.onLine) document.getElementById('offlineBanner').classList.add('show');
-
-  const preloader = document.getElementById('preloader');
-  preloader.style.opacity = '0';
-  preloader.style.visibility = 'hidden';
-  preloader.classList.add('hidden');
 
   setTimeout(() => {
     if(currentUser && !currentUser.isAdmin) {
